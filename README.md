@@ -1,6 +1,6 @@
 # ireal-parse
 
-This is a script that parses (charts from ireal pro)[http://www.irealb.com/forums/] into a convenient JSON format. We use pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader) to achieve this.
+This is a script that parses [charts from ireal pro](http://www.irealb.com/forums/) into a convenient JSON format. We use pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader) to achieve this.
 
 ## Small Warning
 
