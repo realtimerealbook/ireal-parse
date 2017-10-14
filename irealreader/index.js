@@ -7,11 +7,8 @@ const parser = require('./parser');
 
 function iRealReader(data){
   const percentEncoded = regex.exec(data);
-  // console.log(percentEncoded); array
   const percentDecoded = decodeURIComponent(percentEncoded[1]);
-  // console.log(percentDecoded);
   var parts = percentDecoded.split("===");  //songs are separated by ===
-  // console.log(parts);
   if(parts.length > 1) this.name = parts.pop();  //playlist name
   this.songs = parts.map(x => new Song(x));
 }
@@ -20,7 +17,13 @@ function Song(data){
   const parts = data.split(/=+/).filter(x => x != ""); //split on one or more equal signs, remove the blanks
   let offset = 0
   this.title = parts[0];
-  this.composer = parts[1];
+  if (parts[1].split(" ").length == 2) {
+    let spl = parts[1].split(" ");
+    this.composer = spl[1] + " " + spl[0];
+  } else {
+    this.composer = parts[1];
+  }
+  // console.log(this.composer + " /// " + this.title)
   this.style = parts[2];
   this.key = parts[3];
   this.transpose = null;
