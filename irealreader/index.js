@@ -37,8 +37,6 @@ function Song(data){
   // get key (eg. Eb, C- etc.)
   this.key = parts[3];
 
-  console.log([this.title,this.composer,this.style,this.key].join(" / "))
-
   // get chords
   this.music = new Music(parts[4]);
 }
@@ -46,10 +44,6 @@ function Song(data){
 function Music(data){
   const parts = data.split(musicPrefix);
   this.raw = unscramble.ireal(parts[1]);
-
-  //TODO: read the time signature
-  this.timeSignature = 'T44';
-
   this.measures = parser(this.raw)
 }
 

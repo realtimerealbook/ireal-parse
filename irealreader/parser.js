@@ -12,16 +12,21 @@
 const chordRegex = /[A-GW]{1}[\+\-\^ho\d#b]*(\/[A-G][#b]?)?/g;
 
 module.exports = function(data){
-  data = removeFromString(data, /<.*?>/); //comments delimited by carets < ... >, non-greedy match. do this first as these may contain other symbols that we look for later on.
-  data = removeFromString(data, /\*\s*\*/); //stars with empty space in between *  *
-  data = removeFromString(data, /\*\w/); //section markers *A, *B, *C
-  data = removeFromString(data, /T\d+/); //time signatures T44, T34
-  data = removeFromString(data, /N\d/); //repeat markers N1, N2, ...
-  data = removeFromString(data, /Y+/); //vertical spacers
-  data = removeFromString(data, 'XyQ'); //empty space
-  data = removeFromString(data, /[npsUSQ]/); //n: N.C, p: pause slash, U: END, S: Segno, Q: Coda, s: small,
 
-  var measures = data.split(/\||LZ|K|Z|\{|\}|\[|\]/g)//measures are delimited by |, LZ, {, } (repeat markers), [, ] (double barlines). Also splitting on K because Kcl seems to indicate a repeat of the previous measure. Z is the end of a song usually.
+  console.log(data);
+
+  data = data.replace(/<.*?>/, ""); //comments delimited by carets < ... >, non-greedy match. do this first as these may contain other symbols that we look for later on.
+  data = data.replace(/\*\s*\*/, ""); //stars with empty space in between *  *
+  data = data.replace(/\*\w/, ""); //section markers *A, *B, *C
+  data = data.replace(/T\d+/, ""); //time signatures T44, T34
+  data = data.replace(/N\d/, ""); //repeat markers N1, N2, ...
+  data = data.replace(/Y+/, ""); //vertical spacers
+  data = data.replace('XyQ', ""); //empty space
+  data = data.replace(/[npsUSQ]/, ""); //n: N.C, p: pause slash, U: END, S: Segno, Q: Coda, s: small,
+
+  var measures = data.split(/\||LZ|K|Z|\{|\}|\[|\]/g); //measures are delimited by |, LZ, {, } (repeat markers), [, ] (double barlines). Also splitting on K because Kcl seems to indicate a repeat of the previous measure. Z is the end of a song usually.
+
+  console.log(measures);
 
   measures = fillSingleRepeats(measures);
   measures = fillDoubleRepeats(measures);
@@ -72,8 +77,4 @@ function fillInvisibleSlashChords (measures){
     invisibleMeasureIdx = measures.findIndex(m => m.some(c => c[0] === 'W'));
   }
   return measures;
-}
-
-function removeFromString (string, toRemove){
-  return string.split(toRemove).join('');
 }
