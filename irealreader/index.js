@@ -23,7 +23,7 @@ function Song(data){
   } else {
     this.composer = parts[1];
   }
-  // console.log(this.composer + " /// " + this.title)
+  console.log(this.composer + " /// " + this.title)
   this.style = parts[2];
   this.key = parts[3];
   this.transpose = null;
