@@ -13,28 +13,34 @@ function iRealReader(data){
   this.songs = parts.map(x => new Song(x));
 }
 
+// the original pianosnake parser also included the fields "tranpose",
+// "compStyle", "bpm" and "repeats"
 function Song(data){
-  const parts = data.split(/=+/).filter(x => x != ""); //split on one or more equal signs, remove the blanks
-  let offset = 0
+
+  // split on one or more equal signs, remove the blanks
+  const parts = data.split(/=+/).filter(x => x != "");
+
+  // get title
   this.title = parts[0];
+
+  // get composer: reverse first and last names
   if (parts[1].split(" ").length == 2) {
     let spl = parts[1].split(" ");
     this.composer = spl[1] + " " + spl[0];
   } else {
     this.composer = parts[1];
   }
-  console.log(this.composer + " /// " + this.title)
+
+  // get style (eg. Medium Swing, Ballad etc.)
   this.style = parts[2];
+
+  // get key (eg. Eb, C- etc.)
   this.key = parts[3];
-  this.transpose = null;
-  if(parts[4].indexOf(musicPrefix) !== 0){
-    offset = 1;
-    this.transpose = parseInt(parts[4]) || null;
-  }
-  this.music = new Music(parts[4 + offset]);
-  this.compStyle = parts[5 + offset] || null;
-  this.bpm = parseInt(parts[6 + offset]) || null;
-  this.repeats = parseInt(parts[7 + offset]) || null;
+
+  console.log([this.title,this.composer,this.style,this.key].join(" / "))
+
+  // get chords
+  this.music = new Music(parts[4]);
 }
 
 function Music(data){
