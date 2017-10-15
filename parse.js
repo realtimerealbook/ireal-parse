@@ -1,7 +1,8 @@
 const fs = require('fs');
 const iRealReader = require('./irealreader/index');
 
-fs.readFile('data/tellmeabedtimestory.txt', (err, data) => {
+var fn = process.argv[2];
+fs.readFile('data/'+fn+'.txt', (err, data) => {
   if (err) throw err;
   parsed = new iRealReader(data)
   for (i=0; i<parsed.songs.length; i++){
