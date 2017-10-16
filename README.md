@@ -10,3 +10,9 @@ Ensure that your file is in `data_in/<filename>.txt`. Then run
 ```
 node parse <filename>
 ```
+
+To test, ensure that the correctly parsed file is in `data_out_test/<filename>.json`. Then run
+```
+(node parse 1300)
+node test
+```

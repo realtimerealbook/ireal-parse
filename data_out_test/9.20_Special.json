@@ -1,0 +1,257 @@
+{
+  "title": "9.20 Special",
+  "composer": "Earl Warren",
+  "style": "Medium Swing",
+  "key": "C",
+  "chartData": [
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb-6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb-6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bb",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bb7",
+            "A7",
+            "Ab7",
+            "G7"
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "F#o7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "Ab7",
+            "G7"
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "F#o7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "F7",
+            "Bb"
+          ]
+        }
+      ],
+      "sectionName": "A"
+    },
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "Bb",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb",
+            "",
+            "Eb6",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F",
+            "",
+            "F6",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F7",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "sectionName": "B"
+    },
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb-6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Eb-6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bb",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bb7",
+            "A7",
+            "Ab7",
+            "G7"
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C9",
+            "",
+            "F#o7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C6",
+            "F7",
+            "Bb",
+            "D9"
+          ]
+        }
+      ],
+      "sectionName": "A"
+    }
+  ]
+}
