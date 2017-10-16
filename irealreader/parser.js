@@ -2,8 +2,6 @@
 
 module.exports = function(data){
 
-  console.log(data);
-
   var ret = [];
 
   // remove chunks of characters
@@ -66,10 +64,14 @@ module.exports = function(data){
 
       // get time signature
       // we only store the denominator value, as the numerator can be derived from length
+      // assume 4/4 if time signature is not available (see 26-2)
       if (bar.charAt(0)=="T"){
         previous_bar_nchords = nchords = parseInt(bar.charAt(1)); // eg "T54" -> 5
         previous_bar_denominator = b_ret.denominator = parseInt(bar.charAt(2)); // eg "T54" -> 4
         bar = bar.substr(3); // eg "T54C^9..." -> "C^9..."
+      } else if (!previous_bar_nchords) {
+        nchords = 4;
+        b_ret.denominator = 4;
       } else {
         nchords = previous_bar_nchords;
         b_ret.denominator = previous_bar_denominator;
@@ -83,7 +85,7 @@ module.exports = function(data){
         var chord = chords[k];
 
         // remove empty chords
-        if (chord.trim()==""){
+        if (chord.trim()=="" || chord=="Z"){
           continue;
         }
 

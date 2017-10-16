@@ -6,7 +6,7 @@ Most of the code here is adapted from pianosnake's [ireal-reader](https://www.np
 
 ## Usage
 
-Ensure that your file is in `data/<filename>.txt`. Then run
+Ensure that your file is in `data_in/<filename>.txt`. Then run
 ```
 node parse <filename>
 ```
