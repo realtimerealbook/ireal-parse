@@ -1,6 +1,19 @@
 const fs = require('fs');
+const path = require('path');
 const iRealReader = require('./irealreader/index');
 
+// delete all files in out directory
+var directory = 'data_out';
+fs.readdir(directory, (err, files) => {
+  if (err) throw error;
+  for (const file of files) {
+    fs.unlink(path.join(directory, file), err => {
+      if (err) throw error;
+    });
+  }
+});
+
+// parse and output file
 var fn_in = process.argv[2];
 fs.readFile('data_in/'+fn_in+'.txt', (err, data) => {
   if (err) throw err;
