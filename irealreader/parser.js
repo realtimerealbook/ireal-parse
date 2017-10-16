@@ -13,16 +13,12 @@ const chordRegex = /[A-GW]{1}[\+\-\^ho\d#b]*(\/[A-G][#b]?)?/g;
 
 module.exports = function(data){
 
-  console.log(data);
-
   var ret = [];
 
   // remove chunks of characters
   // "<?>" - comments (eg. "<Loops vamp>")
-  // " ]" - new line
   // "XyQ" - empty spaces
   data = data.replace(/<.*?>/g, "");
-  // data = data.replace(/\s]/g,"");
   data = data.replace(/XyQ/g, "");
 
   // remove various individual characters:
@@ -34,6 +30,7 @@ module.exports = function(data){
   // "S" - Segno
   // "Y" - vertical spacer (?)
   // "," - ??
+  // "]" - ??
   data = data.replace(/[lnpUSQY\,]/g, "");
 
   // split data into sections "["
@@ -129,7 +126,7 @@ module.exports = function(data){
         chords_ret.splice(1, 0, "");
         chords_ret.push("");
       }
-      b_ret.chords = chords_ret;
+      b_ret.barData = chords_ret;
       s_ret.sectionData.push(b_ret);
     }
     ret.push(s_ret);
