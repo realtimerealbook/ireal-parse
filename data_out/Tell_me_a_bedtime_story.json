@@ -340,12 +340,7 @@
             "",
             ""
           ]
-        }
-      ],
-      "sectionName": "B"
-    },
-    {
-      "sectionData": [
+        },
         {
           "denominator": 4,
           "barData": [
@@ -385,11 +380,7 @@
             "",
             ""
           ]
-        }
-      ]
-    },
-    {
-      "sectionData": [
+        },
         {
           "denominator": 4,
           "barData": [
@@ -497,11 +488,7 @@
             "C^7#11",
             ""
           ]
-        }
-      ]
-    },
-    {
-      "sectionData": [
+        },
         {
           "denominator": 4,
           "barData": [
@@ -538,7 +525,8 @@
             ""
           ]
         }
-      ]
+      ],
+      "sectionName": "B"
     }
   ]
 }

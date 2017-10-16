@@ -9,7 +9,7 @@ fs.readFile('data_in/'+fn_in+'.txt', (err, data) => {
     var fn_out = parsed.songs[i].title.replace(/\s/g,"_");
     fs.writeFile('data_out/'+fn_out+'.json', JSON.stringify(parsed.songs[i],null,2), (err) => {
       if (err) throw err;
-      console.log("Saved file: "+fn_out);
     })
+    console.log("Saved file: "+fn_out);
   }
 });

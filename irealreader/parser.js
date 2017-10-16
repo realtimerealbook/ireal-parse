@@ -1,25 +1,15 @@
 'use strict';
 
-//regex:
-//  letters A-G and W (W is an invisible slash chord)
-//  {1} only one of the aforementioned letters
-//  followed by zero or more of these: + - ^ h o # b digit
-//  followed by an optional group (to catch slash chords)
-//    that starts with a slash
-//    followed by A-G
-//    followed by optional # or b
-
-const chordRegex = /[A-GW]{1}[\+\-\^ho\d#b]*(\/[A-G][#b]?)?/g;
-
 module.exports = function(data){
+
+  console.log(data);
 
   var ret = [];
 
   // remove chunks of characters
   // "<?>" - comments (eg. "<Loops vamp>")
-  // "XyQ" - empty spaces
-  data = data.replace(/<.*?>/g, "");
-  data = data.replace(/XyQ/g, "");
+  data = data.replace(/<.*?>|N1|N2/g, "");
+  data = data.replace(/N1|N2/g, "");
 
   // remove various individual characters:
   // "l" - line (?)
@@ -29,12 +19,11 @@ module.exports = function(data){
   // "Q" - Coda
   // "S" - Segno
   // "Y" - vertical spacer (?)
-  // "," - ??
   // "]" - ??
-  data = data.replace(/[lnpUSQY\,]/g, "");
+  data = data.replace(/[lnpUSQY]/g, "");
 
   // split data into sections "["
-  var sections = data.split("[");
+  var sections = data.split(/[^A-Za-z0-9\s]\*/);
 
   for (var i=1; i<sections.length; i++){ // ignore first (blank) entry
 
@@ -43,14 +32,12 @@ module.exports = function(data){
     var section = sections[i];
 
     // get section name
-    if (section.charAt(0) == "*") {
-      var sectionName = section.charAt(1); // eg "*i" -> "i"
-      if (sectionName == "i") {
-        sectionName = "Intro"
-      };
-      s_ret.sectionName = sectionName;
-      section = section.substr(2);
-    }
+    var sectionName = section.charAt(0);
+    if (sectionName == "i") {
+      sectionName = "Intro"
+    };
+    section = section.substr(1);
+    s_ret.sectionName = sectionName;
 
     // split section by barlines:
     // LZ - normal barline
@@ -58,7 +45,9 @@ module.exports = function(data){
     // {} - repeats
     // | - line break??
     // ] - new line?
-    section = section.split(/LZ|Z\s|\{|\}|\||\]/);
+    // , - chord separator
+    // XyQ - ??
+    section = section.split(/Xy|LZ|Z\s|\{|\}|\||\[|\]/);
 
     var previous_bar_nchords; // this is not stored
     var previous_bar_denominator; // this is stored
@@ -87,7 +76,7 @@ module.exports = function(data){
       }
 
       // split data in chords
-      var chords = bar.split(" ");
+      var chords = bar.split(/\s|\,/);
       var chords_ret = [];
 
       for (var k=0; k<chords.length; k++){
@@ -104,7 +93,7 @@ module.exports = function(data){
         }
 
         // replace "x" with the previous chord
-        if (chord == "x"){
+        if (chord == "x" || chord == "Kc"){
           chord = previous_chord;
         } else {
           previous_chord = chord;
@@ -118,6 +107,7 @@ module.exports = function(data){
       // if nchords==4, chords==["C"] -> ["C","","",""]
       // if nchords==5, chords==["C"] -> ["C","","","",""]
       // if nchords==2, chords==["C","G"] -> ["C","","G",""]
+      // if nchords==3, chords==["C","F","G"] -> ["C","","F","G"] (could be wrong sometimes)
       if (chords_ret.length==1) {
         for (var n=0; n<nchords-1; n++) {
           chords_ret.push("");
@@ -125,6 +115,8 @@ module.exports = function(data){
       } else if (nchords==4 && chords_ret.length==2) {
         chords_ret.splice(1, 0, "");
         chords_ret.push("");
+      } else if (nchords==4 && chords_ret.length==3) {
+        chords_ret.splice(1, 0, "");
       }
       b_ret.barData = chords_ret;
       s_ret.sectionData.push(b_ret);

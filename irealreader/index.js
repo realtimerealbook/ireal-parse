@@ -8,8 +8,8 @@ const parser = require('./parser');
 function iRealReader(data){
   const percentEncoded = regex.exec(data);
   const percentDecoded = decodeURIComponent(percentEncoded[1]);
-  var parts = percentDecoded.split("===");  //songs are separated by ===
-  if(parts.length > 1) this.name = parts.pop();  //playlist name
+  var parts = percentDecoded.split("===");  // songs are separated by ===
+  if(parts.length > 1) this.name = parts.pop();  // playlist name
   this.songs = parts.map(x => new chart(x));
 }
 
