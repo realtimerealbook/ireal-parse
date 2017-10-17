@@ -20,7 +20,7 @@ Ensure that `data_in/1300.txt` is available, then simply run
 node parse
 ```
 
-3. Your output should now be in `data_out/<title>.json`.
+Your output should now be in `data_out/<title>.json`.
 
 ## Testing
 
