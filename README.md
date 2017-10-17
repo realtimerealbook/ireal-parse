@@ -8,9 +8,7 @@ A good portion of the code here is adapted from pianosnake's [ireal-reader](http
 
 First configure `list.txt` to contain the list of files we want to parse and test. Each file is separated by a new line, with spaces replaced by underscores. For example
 ```
-9.20_Special
-26-2
-52nd_Street_Theme
+Autumn_Leaves
 Fly_Me_To_The_Moon
 Tell_me_a_bedtime_story
 ```
