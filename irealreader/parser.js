@@ -22,12 +22,8 @@ module.exports = function(data){
   // "]" - ??
   data = data.replace(/[lnpUSQY]/g, "");
 
-  // split data into sections "["
+  // split data into sections "*"
   var sections = data.split(/[^A-Za-z0-9\s]\*/);
-
-  // console.log()
-  // console.log(sections);
-  // console.log()
 
   for (var i=0; i<sections.length; i++){
 
@@ -140,33 +136,4 @@ module.exports = function(data){
     ret.push(s_ret);
   }
   return ret;
-}
-
-
-// don't use this first!
-
-function parseChord(chord){
-  // convert a chord string into a chord object
-  // examples:
-  // E^7#11 -> {root: E, quality: maj7#11}
-  // F#-11 -> {root: F#, quality: m11}
-  // Bb7sus -> {root: Bb, quality: 7sus}
-  var root;
-  var quality;
-  var over;
-
-  // get root
-  if (chord.charAt(1)=="#" || chord.charAt(1)=="b") {
-    root = chord.substr(0,2);
-    chord = chord.substr(2);
-  } else {
-    root = chord.charAt(0);
-    chord = chord.substr(1);
-  }
-
-  // get quality
-  quality = chord; // change this later to take into account slash chords
-  quality = quality.replace("^","M");
-  quality = quality.replace("-","m");
-  return {"root":root, "quality":quality}
 }

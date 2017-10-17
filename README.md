@@ -6,7 +6,7 @@ A good portion of the code here is adapted from pianosnake's [ireal-reader](http
 
 ## Usage
 
-First configure `list.txt` to contain the list of files we want to parse and test. Each file is separated by a new line, and replace spaces in each file with underscores. For example
+First configure `list.txt` to contain the list of files we want to parse and test. Each file is separated by a new line, with spaces replaced by underscores. For example
 ```
 9.20_Special
 26-2
