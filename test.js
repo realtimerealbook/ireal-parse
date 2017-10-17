@@ -2,7 +2,7 @@
 const readline = require('readline');
 const fs = require('fs');
 const rl = readline.createInterface({
-  input: fs.createReadStream('test_list.txt')
+  input: fs.createReadStream('list.txt')
 })
 rl.on('line', function(line) {
   compareJSON(line);

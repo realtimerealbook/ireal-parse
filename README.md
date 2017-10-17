@@ -2,38 +2,29 @@
 
 This is a script that parses [charts from ireal pro](http://www.irealb.com/forums/) into a convenient JSON format, with the intention of inserting them into the rtrb database.
 
-Most of the code here is adapted from pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader).
+A good portion of the code here is adapted from pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader).
 
 ## Usage
 
-We use regex matching to parse files from `1300.txt`. Ensure that `data_in/1300.txt` is available, then run
-
+First configure `list.txt` to contain the list of files we want to parse and test. Each file is separated by a new line, and replace spaces in each file with underscores. For example
 ```
-node parse <chart_title_with_spaces_delimited_by_underscores>
+9.20_Special
+26-2
+52nd_Street_Theme
+Fly_Me_To_The_Moon
+Tell_me_a_bedtime_story
 ```
 
-## Examples
-Parse a single file
+Ensure that `data_in/1300.txt` is available, then simply run
 ```js
-node parse Fly_Me_To_The_Moon // parses /Fly_Me_To_The_Moon/
+node parse
 ```
 
-Parse multiple files
-```js
-node parse "Fly_Me_To_The_Moon|Tell_me_a_bedtime_story" // parses /Fly_Me_To_The_Moon|Tell_me_a_bedtime_story/
-```
-
-To parse everything, simply run
-```js
-node parse // parses /(?:)/
-```
-
-Your output should now be in `data_out/<title>.json`.
+3. Your output should now be in `data_out/<title>.json`.
 
 ## Testing
 
-To test that your output matches the expected output, configure `test_list.txt` to include the names of files you want to test (separated by line), ensure that the correctly parsed file is in `data_out_test/<filename>.json`. Then run
-
+To test that your output matches the expected output, configure `list.txt` to include the names of files you want to test (separated by line), ensure that the correctly parsed file is in `data_out_test/<filename>.json`. Then run
 ```js
 node test
 ```

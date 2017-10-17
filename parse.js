@@ -19,8 +19,8 @@ if (!fs.existsSync(dir)){
 }
 
 // parse and output file
-const reg = new RegExp(process.argv[2]);
-
+var files = fs.readFileSync("list.txt", "utf-8");
+const reg = new RegExp(files.split("\n").join("|"));
 fs.readFile('data_in/1300.txt', (err, data) => {
   if (err) throw err;
   parsed = new iRealReader(data, reg);
