@@ -8,13 +8,19 @@ Most of the code here is adapted from pianosnake's [ireal-reader](https://www.np
 
 We use regex matching to parse files from `1300.txt`. Ensure that `data_in/1300.txt` is available, then run
 
-```js
+```
 node parse <chart_title_with_spaces_delimited_by_underscores>
 ```
 
-For example,
+## Examples
+Parse a single file
 ```js
 node parse Fly_Me_To_The_Moon // parses /Fly_Me_To_The_Moon/
+```
+
+Parse multiple files
+```js
+node parse "Fly_Me_To_The_Moon|Tell_me_a_bedtime_story" // parses /Fly_Me_To_The_Moon|Tell_me_a_bedtime_story/
 ```
 
 To parse everything, simply run
