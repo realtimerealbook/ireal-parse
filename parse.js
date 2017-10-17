@@ -2,16 +2,21 @@ const fs = require('fs');
 const path = require('path');
 const iRealReader = require('./irealreader/index');
 
-// delete all files in out directory
-var directory = 'data_out';
-fs.readdir(directory, (err, files) => {
-  if (err) throw error;
-  for (const file of files) {
-    fs.unlink(path.join(directory, file), err => {
-      if (err) throw error;
-    });
-  }
-});
+// if the directory "data_out" does not exist, make the directory
+// else delete all files in "data_out"
+var dir = 'data_out';
+if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+} else {
+  fs.readdir(dir, (err, files) => {
+    if (err) throw error;
+    for (const file of files) {
+      fs.unlink(path.join(dir, file), err => {
+        if (err) throw error;
+      });
+    }
+  });
+}
 
 // parse and output file
 const reg = new RegExp(process.argv[2]);
