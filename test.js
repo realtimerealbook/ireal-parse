@@ -1,21 +1,20 @@
+// took this from https://github.com/nodejs/node/pull/4609/files
+const readline = require('readline');
 const fs = require('fs');
+const rl = readline.createInterface({
+  input: fs.createReadStream('test_list.txt')
+})
+rl.on('line', function(line) {
+  compareJSON(line);
+})
 
-fn = ["26-2",
-      "9.20_Special",
-      "Tell_me_a_bedtime_story"];
-
-for (i=0; i<fn.length; i++){
-  f = fn[i];
-  compareJSON(f);
-}
-
+// compares equality of 2 json files in data_out and data_out_test
 function compareJSON(f) {
-  // sorry for the nested callback
   fs.readFile('data_out/'+f+'.json', (err1, data_out) => {
     if (err1) throw err1;
     fs.readFile('data_out_test/'+f+'.json', (err2, data_out_test) => {
       if (err2) throw err2;
-      console.log(f,areBuffersEqual(data_out,data_out_test));
+      console.log(areBuffersEqual(data_out,data_out_test),f);
     });
   });
 }

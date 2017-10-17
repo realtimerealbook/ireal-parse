@@ -1,0 +1,306 @@
+{
+  "title": "Fly Me To The Moon",
+  "composer": "Bart Howard",
+  "style": "Medium Swing",
+  "key": "C",
+  "chartData": [
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "A-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C^7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F^7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bh7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "E7b9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "A-7",
+            "",
+            "A7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C^7",
+            "",
+            "F7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "E-7",
+            "",
+            "A7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C^7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bh7",
+            "",
+            "E7b9",
+            ""
+          ]
+        }
+      ],
+      "sectionName": "A"
+    },
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "A-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C^7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F^7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bh7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "E7b9",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "A-7",
+            "",
+            "A7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "E-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "A7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C^7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "Bh7",
+            "",
+            "E7b9",
+            ""
+          ]
+        }
+      ],
+      "sectionName": "B"
+    }
+  ]
+}

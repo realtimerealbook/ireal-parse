@@ -2,12 +2,13 @@
 
 module.exports = function(data){
 
+  // console.log(data);
+
   var ret = [];
 
   // remove chunks of characters
   // "<?>" - comments (eg. "<Loops vamp>")
   data = data.replace(/<.*?>|N1|N2/g, "");
-  data = data.replace(/N1|N2/g, "");
 
   // remove various individual characters:
   // "l" - line (?)
@@ -23,11 +24,23 @@ module.exports = function(data){
   // split data into sections "["
   var sections = data.split(/[^A-Za-z0-9\s]\*/);
 
-  for (var i=1; i<sections.length; i++){ // ignore first (blank) entry
+  // console.log()
+  // console.log(sections);
+  // console.log()
+
+  for (var i=0; i<sections.length; i++){
 
     var s_ret = {};
     s_ret.sectionData = [];
     var section = sections[i];
+
+    if (section.charAt(0)=="*") {
+      section = section.substr(1);
+    }
+
+    if (section.length==1){
+      continue;
+    }
 
     // get section name
     var sectionName = section.charAt(0);
@@ -128,9 +141,10 @@ module.exports = function(data){
   return ret;
 }
 
-function parseChord(chord){
 
-  // maybe dont use this first
+// don't use this first!
+
+function parseChord(chord){
   // convert a chord string into a chord object
   // examples:
   // E^7#11 -> {root: E, quality: maj7#11}

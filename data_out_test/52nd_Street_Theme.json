@@ -1,0 +1,239 @@
+{
+  "title": "52nd Street Theme",
+  "composer": "Thelonious Monk",
+  "style": "Up Tempo Swing",
+  "key": "C",
+  "chartData": [
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "A-7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "A-7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "A-7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "sectionName": "A"
+    },
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "C7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "F6",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "G7",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "sectionName": "B"
+    },
+    {
+      "sectionData": [
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "A-7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "A-7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "A-7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "D-7",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "G7",
+            ""
+          ]
+        },
+        {
+          "denominator": 4,
+          "barData": [
+            "C",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "sectionName": "A"
+    }
+  ]
+}
