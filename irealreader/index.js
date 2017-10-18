@@ -20,12 +20,13 @@ function chart(data, reg){
   // split on one or more equal signs, remove the blanks
   const parts = data.split(/=+/).filter(x => x != "");
 
+  // output based on regex, e.g. /Fly_Me_To_The_Moon|Tell_me_a_bedtime_story/
   let title_match = parts[0].replace(/\s/g,"_");
-
   if (!reg.test(title_match)) {
     return;
   } else {
 
+    console.log("------------------------");
     console.log("Parsing data for:",parts[0]);
 
     // get title
