@@ -6,7 +6,7 @@ A good portion of the code here is adapted from pianosnake's [ireal-reader](http
 
 ## Usage
 
-First configure `list.txt` to contain the list of file names we want to parse and test (the complete list of available charts in `1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs)). File names should be separated by a new line, and should have spaces replaced by underscores, and special characters escaped. For example
+First configure `list.txt` to contain the list of file names we want to parse and test (the complete list of available charts in `1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs)). File names should be separated by a new line, with spaces replaced by underscores, and special characters escaped. For example
 ```
 Fly_Me_To_The_Moon
 Got_A_Match\?

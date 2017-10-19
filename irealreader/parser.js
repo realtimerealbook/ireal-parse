@@ -1,25 +1,25 @@
 'use strict';
 
 // public variables
-var previous_bar_nchords; // this is not stored - delete this line
-var previous_bar_denominator; // this is stored - delete this line
+var previous_bar_nchords; // this is not stored
+var previous_bar_denominator; // this is stored
 var previous_chord;
 
 module.exports = function(data){
 
-  // console.log("Raw data:",data);
-  if (data.indexOf("T") == -1) {
-    console.log(data);
+  // use this to debug:
+  var find_charts_containing = "";
+  if (data.indexOf(find_charts_containing) !== -1) {
+    console.log("Raw data:",data);
   }
 
   var ret = [];
 
-   // assume T44 if not stated - see Bye Bye Baby, Ecaroh, Funk in Deep Freeze,
-   // Here's To Life, I See Your Face Before Me, I Used to Be Color Blind,
-   // Ill Wind, In Pursuit Of The 27th Man, Isn't It A Lovely Day, Summer
-   // Serenade, You're Laughing At Me
+  // assume T44 if not stated - see Bye Bye Baby, Ecaroh, Funk in Deep Freeze,
+  // Here's To Life, I See Your Face Before Me, I Used to Be Color Blind,
+  // Ill Wind, In Pursuit Of The 27th Man, Isn't It A Lovely Day, Summer
+  // Serenade, You're Laughing At Me
   var currentTS = {"n":4,"d":4};
-  var previous_chord;
 
   // ----- GENERAL LEGEND:
   //
@@ -29,33 +29,38 @@ module.exports = function(data){
   // "{" - start repeat
   // "}" - end repeat
   // "LZ" - normal barline
-  // "|" - also normal barline (see "Au Privave")
+  // "|" - also normal barline (see Au Privave, Stormy Weather)
   // "Z" - end double barline (bolded second line)
   //
   // BETWEEN BARLINES (BAR):
   // "T44" - time signature 44
-  // "N1 N2" - first and second house (represents ONE BAR ONLY, see "I Got Rhythm",
-  // "Like Someone In Love", "Misty")
+  // "(N1|N2|N3)chord" - first and second house (represents ONE BAR ONLY, see
+  // I Got Rhythm, Like Someone In Love, On the Sunny Side of the Street, Misty)
   // "XyQ" - blank space for row alignment
-  // "x" - repeat previous bar (see "Butterfly")
+  // "x" - repeat previous bar (see Butterfly)
+  // "Kcl" or "XyQKcl" - also repeat previous bar (Besame Mucho, Butterfly, Solar)
+  // "r" - repeat previous 2 bars (see Mas Que Nada)
   // "()" - alternative chord written in small (above actual chord)
   // " " - represents a chord seperator
-  // "n" - N.C, which doesn't have to be a full bar (see "Butterfly")
+  // "n" - N.C, which doesn't have to be a full bar (see Butterfly)
   // "p" - just a slash
-  // "f" - pause (see "Butterfly", "Summer Serenade")
   //
   // OTHER ANNOTATIONS:
   // "*A" - section A (could be *B, *C, *i, *v etc)
   // "s" - small chord (eg. sC^7)
-  // "S" - segno (see "Butterfly")
-  // "Q" - coda (see "Butterfly")
+  // "f" - pause (see Butterfly, Summer Serenade)
+  // "S" - segno (see Butterfly)
+  // "Q" - coda (see Butterfly)
+  // "Y" - vertical spacer (see Nearness of You, Night in Tunisia)
   // "<stuff here>" - comments, some examples of comments include:
   // <D.C al 2nd ending>, <3x>, <Fine>, <half x feel throughout>,
-  // <Original takes Coda every time>, <solos on AABA>, <*666x> ?? La Fiesta
+  // <Original takes Coda every time>, <solos on AABA>, <*666x> - see La Fiesta
   //
   // UNRECOGNISABLE:
-  // "," see "Butterfly"
-  // "Kcl" - repeat previous bar? (Besame Mucho, Butterfly, Solar)
+  // "," - equivalent to space? especially for whole notes in 44 (see Butterfly,
+  // L-O-V-E(?), Lush Life, Skylark, When You Wish Upon A Star)
+  // "l" - ?? (Lush Life, My Funny Valentine, Tell me a bedtime story)
+  // "U" - useless?? (Mas Que Nada, Scrapple From The Apple, Triste, Wave)
   //
   // CHORD FORMATTING:
   // - nothing: "W" (see Butterfly "ppsW/C")
@@ -66,21 +71,7 @@ module.exports = function(data){
 
 
   // ----- DATA PREPROCESSING:
-  // remove chunks of characters
-  // "<?>" - comments (eg. "<Loops vamp>")?
-  // "XyQ" - empty spaces
-  data = data.replace(/XyQ/g, "");
-
-  // remove various individual characters from all raw data:
-  // "l" - line (?)
-  // "n" - N.C
-  // "p" - pause slash
-  // "U" - end
-  // "Q" - Coda
-  // "S" - Segno
-  // "Y" - vertical spacer (?)
-  // "]" - ??
-  data = data.replace(/[lnpUSQY]/g, "");
+  data = data.replace(/XyQ|[lnpUSQY]/g, "");
 
   // ----- SPLIT DATA BY SECTION:
   // a new section typically starts with "*S" where S is the section name
