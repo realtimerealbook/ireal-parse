@@ -11,13 +11,80 @@ module.exports = function(data){
 
   var ret = [];
 
+  // ----- GENERAL LEGEND:
+  //
+  // BARLINES:
+  // "[" - start double barline
+  // "]" - end double barline
+  // "{" - start repeat
+  // "}" - end repeat
+  // "LZ" - normal barline
+  // "|" - also normal barline (see "Au Privave")
+  // "Z" - end double barline (bolded second line)
+  //
+  // BETWEEN BARLINES (BAR):
+  // "T44" - time signature 44
+  // "N1 N2" - first and second house (represents ONE BAR ONLY, see "I Got Rhythm",
+  // "Like Someone In Love", "Misty")
+  // "XyQ" - blank space for row alignment
+  // "x" - repeat previous bar (see "Butterfly")
+  // "()" - alternative chord written in small (above actual chord)
+  // " " - represents a chord seperator
+  // "n" - N.C, which doesn't have to be a full bar (see "Butterfly")
+  // "p" - just a slash
+  // "f" - pause (wtf? see "Butterfly")
+  //
+  // OTHER ANNOTATIONS:
+  // "*A" - section A (could be *B, *C, *i, *v etc)
+  // "s" - small chord (eg. sC^7)
+  // "S" - segno (see "Butterfly")
+  // "Q" - coda (see "Butterfly")
+  // "<stuff here>" - comments, some examples of comments include:
+  // <D.C al 2nd ending>, <3x>, <Fine>, <half x feel throughout>,
+  // <Original takes Coda every time>, <solos on AABA>, <*666x> ?? La Fiesta
+  //
+  // UNRECOGNISABLE:
+  // "," see "Butterfly"
+  // "Kcl" - repeat previous bar? (Besame Mucho, Butterfly)
+  //
+  // CHORD FORMATTING:
+  // - nothing:
+  // "W" (see Butterfly "ppsW/C")
+  //
+  // - major:
+  // "Bb^7"
+  // "Ab^7#5/Bb"
+  // "A^7#11"
+  // "F6"
+  //
+  // - minor:
+  // "C-7"
+  // "D-6"
+  // "G-^7"
+  //
+  // - dim/aug:
+  // "Bo7"
+  // "Ah7" - Ahalfdim7
+  //
+  // - dom:
+  // "Bb7b9sus"
+  // "Bb7sus"
+  // "Bb7#11"
+  // "D7b13"
+  //
+  // - slash chords:
+  // "D7b9/F#"
+  // "D7b9b5" (but b5 is #11? see Girl from Ipanema)
+
+
+  // ----- DATA PREPROCESSING:
   // remove chunks of characters
   // "<?>" - comments (eg. "<Loops vamp>")
   // "XyQ" - empty spaces
   // "N1","N2" - 1st and 2nd house
   data = data.replace(/<.*?>|N1|N2|XyQ/g, "");
 
-  // remove various individual characters:
+  // remove various individual characters from all raw data:
   // "l" - line (?)
   // "n" - N.C
   // "p" - pause slash
@@ -26,18 +93,24 @@ module.exports = function(data){
   // "S" - Segno
   // "Y" - vertical spacer (?)
   // "]" - ??
-  // data = data.replace(/[lnpUSQY]/g, "");
+  data = data.replace(/[lnpUSQY]/g, "");
 
-  // SPLIT DATA BY SECTION:
+  // ----- SPLIT DATA BY SECTION:
   // a new section typically starts with "*S" where S is the section name
   //
   // this may be preceded by a barline:
-  // "{*A": start repeat (eg. 52nd Street Theme)
+  // "{*A": start repeat (eg. Beautiful Love)
   // "[*i": start double barline (eg. Tell me a bedtime story)
   //
   // however, the section may also be succeeded by a barline:
-  // "*A{": start repeat (eg. Take the A Train)
-  // "*A[": start double barline (eg. Fly Me To The Moon)
+  // "*A{": start repeat (eg. Afternoon In Paris)
+  // "*A[": start double barline (eg. All The Things You Are)
+  //
+  // the section may also start AFTER a time signature:
+  // "T44[*": eg. Armando's Rhumba
+  //
+  // other times, there are not even section names to begin with:
+  // "[": start double barline (eg. 500 Miles High, Au Privave, Bag's Groove)
 
   var sections = data.split(/\*/);
 
