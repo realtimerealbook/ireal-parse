@@ -48,33 +48,11 @@ module.exports = function(data){
   // "Kcl" - repeat previous bar? (Besame Mucho, Butterfly)
   //
   // CHORD FORMATTING:
-  // - nothing:
-  // "W" (see Butterfly "ppsW/C")
-  //
-  // - major:
-  // "Bb^7"
-  // "Ab^7#5/Bb"
-  // "A^7#11"
-  // "F6"
-  //
-  // - minor:
-  // "C-7"
-  // "D-6"
-  // "G-^7"
-  //
-  // - dim/aug:
-  // "Bo7"
-  // "Ah7" - Ahalfdim7
-  //
-  // - dom:
-  // "Bb7b9sus"
-  // "Bb7sus"
-  // "Bb7#11"
-  // "D7b13"
-  //
-  // - slash chords:
-  // "D7b9/F#"
-  // "D7b9b5" (but b5 is #11? see Girl from Ipanema)
+  // - nothing: "W" (see Butterfly "ppsW/C")
+  // - major: "Bb^7", "A^7#11", "F6"
+  // - minor: "C-7", "D-6", "G-^7"
+  // - dim/aug: "Bo7", "Ah7", "Ab^7#5/Bb"
+  // - dom: "Bb7b9sus", "Bb7sus", "Bb7#11", "D7b9b5" (but b5==#11? see Girl from Ipanema)
 
 
   // ----- DATA PREPROCESSING:
