@@ -38,7 +38,8 @@ fs.readFile('data_in/1300.txt', (err, data) => {
       fs.writeFile('data_out/'+fn+'.json', JSON.stringify(parsed.songs[i],null,2), (err) => {
         if (err) throw err;
       })
-      console.log("Saved file (" + ii.toString() + "," + i.toString() + "): "+fn);
+      console.log("Saved file (" + ii.toString() + "/" + files.split("\n").length.toString() + ","
+                                 + (i+1).toString() + "/" + parsed.songs.length.toString() + "): "+fn);
       ii++;
     }
   }
