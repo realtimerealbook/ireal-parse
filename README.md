@@ -1,6 +1,6 @@
 # ireal-parse
 
-This is a script that parses [charts from ireal pro](http://www.irealb.com/forums/) into a convenient JSON format, with the intention of inserting them into the rtrb database.
+This is a script that selectively parses charts from the [ireal pro 1300 jazz standards](https://www.irealb.com/forums/showthread.php?12753-Jazz-1300-Standards) into a convenient JSON format, with the intention of inserting them into the rtrb database.
 
 A good portion of the code here is adapted from pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader).
 
@@ -25,7 +25,7 @@ Your output should now be in `data_out/<title>.json`.
 
 ## Testing
 
-To test that your output matches the expected output, configure `list.txt` to include the names of files you want to test (separated by line), ensure that the correctly parsed file is in `data_out_test/<filename>.json`. Then run
+To test that your output matches the expected output, first configure `list.txt` to include the names of files you want to test. Ensure that the correctly parsed files are in `data_out_test/<filename>.json`, then run
 ```js
 node test
 ```

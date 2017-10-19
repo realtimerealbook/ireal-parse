@@ -1,15 +1,25 @@
 'use strict';
 
 // public variables
-var previous_bar_nchords; // this is not stored
-var previous_bar_denominator; // this is stored
+var previous_bar_nchords; // this is not stored - delete this line
+var previous_bar_denominator; // this is stored - delete this line
 var previous_chord;
 
 module.exports = function(data){
 
-  console.log("Raw data:",data);
+  // console.log("Raw data:",data);
+  if (data.indexOf("T") == -1) {
+    console.log(data);
+  }
 
   var ret = [];
+
+   // assume T44 if not stated - see Bye Bye Baby, Ecaroh, Funk in Deep Freeze,
+   // Here's To Life, I See Your Face Before Me, I Used to Be Color Blind,
+   // Ill Wind, In Pursuit Of The 27th Man, Isn't It A Lovely Day, Summer
+   // Serenade, You're Laughing At Me
+  var currentTS = {"n":4,"d":4};
+  var previous_chord;
 
   // ----- GENERAL LEGEND:
   //
@@ -32,7 +42,7 @@ module.exports = function(data){
   // " " - represents a chord seperator
   // "n" - N.C, which doesn't have to be a full bar (see "Butterfly")
   // "p" - just a slash
-  // "f" - pause (wtf? see "Butterfly")
+  // "f" - pause (see "Butterfly", "Summer Serenade")
   //
   // OTHER ANNOTATIONS:
   // "*A" - section A (could be *B, *C, *i, *v etc)
@@ -45,22 +55,21 @@ module.exports = function(data){
   //
   // UNRECOGNISABLE:
   // "," see "Butterfly"
-  // "Kcl" - repeat previous bar? (Besame Mucho, Butterfly)
+  // "Kcl" - repeat previous bar? (Besame Mucho, Butterfly, Solar)
   //
   // CHORD FORMATTING:
   // - nothing: "W" (see Butterfly "ppsW/C")
   // - major: "Bb^7", "A^7#11", "F6"
   // - minor: "C-7", "D-6", "G-^7"
-  // - dim/aug: "Bo7", "Ah7", "Ab^7#5/Bb"
+  // - dim/aug: "Bo7", "Ah7", "Ab^7#5/Bb" (this is valid even though its just Bb13#11, see Butterfly)
   // - dom: "Bb7b9sus", "Bb7sus", "Bb7#11", "D7b9b5" (but b5==#11? see Girl from Ipanema)
 
 
   // ----- DATA PREPROCESSING:
   // remove chunks of characters
-  // "<?>" - comments (eg. "<Loops vamp>")
+  // "<?>" - comments (eg. "<Loops vamp>")?
   // "XyQ" - empty spaces
-  // "N1","N2" - 1st and 2nd house
-  data = data.replace(/<.*?>|N1|N2|XyQ/g, "");
+  data = data.replace(/XyQ/g, "");
 
   // remove various individual characters from all raw data:
   // "l" - line (?)
