@@ -28,7 +28,17 @@ module.exports = function(data){
   // "]" - ??
   // data = data.replace(/[lnpUSQY]/g, "");
 
-  // split data by section
+  // SPLIT DATA BY SECTION:
+  // a new section typically starts with "*S" where S is the section name
+  //
+  // this may be preceded by a barline:
+  // "{*A": start repeat (eg. 52nd Street Theme)
+  // "[*i": start double barline (eg. Tell me a bedtime story)
+  //
+  // however, the section may also be succeeded by a barline:
+  // "*A{": start repeat (eg. Take the A Train)
+  // "*A[": start double barline (eg. Fly Me To The Moon)
+
   var sections = data.split(/\*/);
 
   // get section data
@@ -40,8 +50,8 @@ module.exports = function(data){
 }
 
 function getSectionData(section){
-  console.log();
-  console.log("Section:",section);
+  // console.log();
+  // console.log("Section:",section);
   var s_ret = {};
   s_ret.sectionData = [];
   if (section.charAt(0)=="*") {
@@ -76,7 +86,7 @@ function getSectionData(section){
 
 function getBarData(bar) {
 
-  console.log("Bar",bar)
+  // console.log("Bar",bar)
 
   var b_ret = {};
   var nchords;

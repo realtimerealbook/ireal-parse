@@ -6,10 +6,13 @@ A good portion of the code here is adapted from pianosnake's [ireal-reader](http
 
 ## Usage
 
-First configure `list.txt` to contain the list of files we want to parse and test. Each file is separated by a new line, with spaces replaced by underscores. For example
+First configure `list.txt` to contain the list of files we want to parse and test. Each file is separated by a new line, with spaces replaced by underscores and special characters escaped by a backslash. For example
 ```
-Autumn_Leaves
 Fly_Me_To_The_Moon
+Got_A_Match\?
+Here\'s_That_Rainy_Day
+So_Nice_\(Summer_Samba\)
+St\._Thomas
 Tell_me_a_bedtime_story
 ```
 

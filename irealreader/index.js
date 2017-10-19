@@ -26,7 +26,7 @@ function chart(data, reg){
     return;
   } else {
 
-    console.log("------------------------");
+    console.log(Array(80).join("-"));
     console.log("Parsing data for:",parts[0]);
 
     // get title
@@ -48,7 +48,10 @@ function chart(data, reg){
 
     // get chart data
     var raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
-    this.chartData = parser(raw)
+    this.chartData = parser(raw);
+
+    // console.log("Final results:");
+    // console.log(JSON.stringify(this, null, 2));
   }
 }
 
