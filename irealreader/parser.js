@@ -1,25 +1,39 @@
 'use strict';
 
-// public variables
-var previous_bar_nchords; // this is not stored
-var previous_bar_denominator; // this is stored
-var previous_chord;
+// Read chart horizontally, storing into a state variable, instead of splitting
+// the data into sections then bars.
+//
+// This is due to some problems with the chart syntax, including:
+// - section names declared before or after the barline
+// - the lack of time signatures in some charts
+// - repeat signs, including first and second houses, coda, etc
+// - some naming inconsistencies, eg "x" vs "Kcl"
+//
+// To demonstrate, some examples of chart beginnings include:
+// "{*A" (Beautiful Love)
+// "*A{" (Afternoon in Paris)
+// "T44[*" (Armando's Rhumba)
+// "[" (500 Miles High)
+
+var state = {
+  // Time Signature: assume 4/4 if not stated (some charts have no time sig)
+  "TS": {
+    "n": 4, // not stored
+    "d": 4, // stored
+  },
+  // Previous Chord: memory for repeating chords
+  "chord": "",
+}
 
 module.exports = function(data){
+
+  var ret = [];
 
   // use this to debug:
   var find_charts_containing = "";
   if (data.indexOf(find_charts_containing) !== -1) {
     console.log("Raw data:",data);
   }
-
-  var ret = [];
-
-  // assume T44 if not stated - see Bye Bye Baby, Ecaroh, Funk in Deep Freeze,
-  // Here's To Life, I See Your Face Before Me, I Used to Be Color Blind,
-  // Ill Wind, In Pursuit Of The 27th Man, Isn't It A Lovely Day, Summer
-  // Serenade, You're Laughing At Me
-  var currentTS = {"n":4,"d":4};
 
   // ----- GENERAL LEGEND:
   //
@@ -75,21 +89,6 @@ module.exports = function(data){
 
   // ----- SPLIT DATA BY SECTION:
   // a new section typically starts with "*S" where S is the section name
-  //
-  // this may be preceded by a barline:
-  // "{*A": start repeat (eg. Beautiful Love)
-  // "[*i": start double barline (eg. Tell me a bedtime story)
-  //
-  // however, the section may also be succeeded by a barline:
-  // "*A{": start repeat (eg. Afternoon In Paris)
-  // "*A[": start double barline (eg. All The Things You Are)
-  //
-  // the section may also start AFTER a time signature:
-  // "T44[*": eg. Armando's Rhumba
-  //
-  // other times, there are not even section names to begin with:
-  // "[": start double barline (eg. 500 Miles High, Au Privave, Bag's Groove)
-
   var sections = data.split(/\*/);
 
   // get section data
@@ -120,12 +119,6 @@ function getSectionData(section){
   s_ret.sectionName = sectionName;
 
   // split section by barlines:
-  // LZ - normal barline
-  // Z\s - end
-  // {} - repeats
-  // | - line break??
-  // ] - new line?
-  // , - chord separator
   section = section.split(/LZ|Z\s|\{|\}|\||\[|\]/);
 
   for (var j=0; j<section.length; j++){
@@ -151,15 +144,15 @@ function getBarData(bar) {
   // we only store the denominator value, as the numerator can be derived from length
   // assume 4/4 if time signature is not available (see 26-2)
   if (bar.charAt(0)=="T"){
-    previous_bar_nchords = nchords = parseInt(bar.charAt(1)); // eg "T54" -> 5
-    previous_bar_denominator = b_ret.denominator = parseInt(bar.charAt(2)); // eg "T54" -> 4
+    state["TS"]["n"] = nchords = parseInt(bar.charAt(1)); // eg "T54" -> 5
+    state["TS"]["d"] = b_ret.denominator = parseInt(bar.charAt(2)); // eg "T54" -> 4
     bar = bar.substr(3); // eg "T54C^9..." -> "C^9..."
-  } else if (!previous_bar_nchords) {
+  } else if (!state["TS"]["n"]) {
     nchords = 4;
     b_ret.denominator = 4;
   } else {
-    nchords = previous_bar_nchords;
-    b_ret.denominator = previous_bar_denominator;
+    nchords = state["TS"]["n"];
+    b_ret.denominator = state["TS"]["d"];
   }
 
   // split data in chords
@@ -181,9 +174,9 @@ function getBarData(bar) {
 
     // replace "x" with the previous chord
     if (chord == "x" || chord == "Kc"){
-      chord = previous_chord;
+      chord = state["chord"];
     } else {
-      previous_chord = chord;
+      state["chord"] = chord;
     }
 
     chords_ret.push(chord);
