@@ -46,7 +46,7 @@ examples:
 major: "Bb^7", "A^7#11", "F6"
 minor: "C-7", "D-6", "G-^7"
 dim/aug: "Bo7", "Ah7", "Ab^7#5/Bb"
-dom: "Bb7b9sus", "Bb7sus", "Bb7#11", "D7b9b5"
+dom: "Bb7b9sus", "Bb7sus", "Bb7#11", "D7b9b5", "Bb7alt"
 
 other:
 "W" - nothing (see Butterfly "ppsW/C")
