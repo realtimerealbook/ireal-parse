@@ -40,10 +40,10 @@ module.exports = function(data){
   }
 
   // use this to debug (find charts containing particular string):
-  // var find_charts_containing = "";
-  // if (data.indexOf(find_charts_containing) !== -1) {
-  //   console.log("Raw data:",data);
-  // }
+  var find_charts_containing = "";
+  if (data.indexOf(find_charts_containing) !== -1) {
+    console.log("Raw data:",data);
+  }
 
   // DATA PREPROCESSING:
   data = data.replace(/XyQ|alt|[UY]/g, "");
@@ -55,33 +55,42 @@ module.exports = function(data){
   data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S)/);
   for (var i=0; i<data.length; i++) {
 
-    // skip over empty items
     var d = data[i];
+
+    // skip over empty items
     if (d.replace(/\s/g,"")=="") {
       continue;
     } else {
 
-      // // use this to debug (find split strings that do not match pattern)
-      // // see this godly thread: https://stackoverflow.com/questions/406230/regular-expression-to-match-a-line-that-doesnt-contain-a-word
-      // if (/^((?!\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|[A-G]+|Q|S|n|s+|f+|r).)*$/g.test(d)) {
-      //   console.log(d);
-      // }
+      // use this to debug (find split strings that do not match pattern)
+      // see this: https://stackoverflow.com/questions/406230/regular-expression-to-match-a-line-that-doesnt-contain-a-word
+      if (/^((?!\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|[A-G]+|Q|S|n|s+|f+|r).)*$/g.test(d)) {
+        console.log(d);
+      }
 
       // Time Signature
       if (/T\d\d/.test(d)) {
         state["TS"]["n"] = parseInt(d.charAt(1));
         state["TS"]["d"] = parseInt(d.charAt(2));
-      // Bar Lines
-      } else if (/^\{|\}|\[|\]|\||Z$/.test(d)) {
+      // Bar Lines, including Section Openers
+      } else if (/^\{|\[|\|$/.test(d)) {
         if (state["Bar"]["Data"].length>0) { // if Bar contains something, push Bar into return
-          ret.push(state["Bar"]);
+          state["Section"]["Data"].push(state["Bar"]);
           state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
             "Data": [],
             "Annotations": [],
           };
         }
-        ret.push(d);
+        state["Section"]["Data"].push(d);
+      // Section Closure
+      } else if (/^\}|\]|\Z$/.test(d)) {
+        state["Section"]["Data"].push(d);
+        ret.push(state["Section"]);
+        state["Section"] = {
+          "Name": "",
+          "Data": [],
+        }
       // Section Name
       } else if (/^\*[\w\W]/.test(d)) {
         state["Section"]["Name"] = d;
@@ -93,11 +102,11 @@ module.exports = function(data){
         state["Bar"]["Annotations"].push(d);
       // One Bar Repeat
       } else if (/x/.test(d)) {
-        ret.push(state["BarHistory"][state["BarHistory"].length-1]);
+        state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-1]);
       // Two Bar Repeat
       } else if (/r/.test(d)) {
-        ret.push(state["BarHistory"][state["BarHistory"].length-1]);
-        ret.push(state["BarHistory"][state["BarHistory"].length-2]);
+        state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-1]);
+        state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-2]);
       }
     }
   }
