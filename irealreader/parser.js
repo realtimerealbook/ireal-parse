@@ -73,31 +73,32 @@ module.exports = function(data){
         state["TS"]["n"] = parseInt(d.charAt(1));
         state["TS"]["d"] = parseInt(d.charAt(2));
       // Bar Lines, including Section Openers
-      } else if (/^\{|\[|\|$/.test(d)) {
-        if (state["Bar"]["Data"].length>0) { // if Bar contains something, push Bar into return
+      } else if (/^\{|\[|\||\}|\]|\Z$/.test(d)) {
+        // Bar Closure (if length>0), push Bar to Section
+        if (state["Bar"]["Data"].length>0) {
           state["Section"]["Data"].push(state["Bar"]);
           state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
             "Data": [],
             "Annotations": [],
           };
-        }
+        };
         state["Section"]["Data"].push(d);
-      // Section Closure
-      } else if (/^\}|\]|\Z$/.test(d)) {
-        state["Section"]["Data"].push(d);
-        ret.push(state["Section"]);
-        state["Section"] = {
-          "Name": "",
-          "Data": [],
-        }
+        // Section Closure: push Section to Return
+        if (/^\}|\]|\Z$/.test(d)) {
+          ret.push(state["Section"]);
+          state["Section"] = {
+            "Name": "",
+            "Data": [],
+          };
+        };
       // Section Name
       } else if (/^\*[\w\W]/.test(d)) {
-        state["Section"]["Name"] = d;
+        state["Section"]["Name"] = d.charAt(1); // use char after *
       // Chord
       } else if (/^[A-G].+/.test(d)) {
         state["Bar"]["Data"].push(d);
-      // Comments / Segno / Coda
+      // Comments / Coda / Segno
       } else if (/<.*?>|Q|S/.test(d)) {
         state["Bar"]["Annotations"].push(d);
       // One Bar Repeat
