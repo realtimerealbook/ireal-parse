@@ -76,6 +76,7 @@ module.exports = function(data){
       } else if (/^\{|\[|\||\}|\]|\Z$/.test(d)) {
         // Bar Closure (if length>0), push Bar to Section
         if (state["Bar"]["Data"].length>0) {
+          state["Bar"]["Denominator"] = state["TS"]["d"];
           state["Section"]["Data"].push(state["Bar"]);
           state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
