@@ -28,14 +28,16 @@ module.exports = function(data){
       "n": 4, // not stored
       "d": 4, // stored
     },
-    "Section": "",
+    "Section": {
+      "Name": "",
+      "Data": [], // Bars
+    },
     "Bar": {
-      "Data": [],
+      "Data": [], // Chords
       "Annotations": [], // could be comments, coda, segno, houses
     },
+    "BarHistory": [], // to take into account single / double bar repeats
   }
-
-  console.log(data);
 
   // use this to debug (find charts containing particular string):
   // var find_charts_containing = "";
@@ -46,10 +48,11 @@ module.exports = function(data){
   // DATA PREPROCESSING:
   data = data.replace(/XyQ|alt|[UY]/g, "");
   data = data.replace(/\,/g," ");
+  data = data.replace(/Kcl/g,"|x");
   data = data.replace(/LZ/g,"|"); // this will also allow split on "Z"
 
   // DATA SPLITTING:
-  data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kcl|x|<.*?>|Q|S)/);
+  data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S)/);
   for (var i=0; i<data.length; i++) {
 
     // skip over empty items
@@ -69,28 +72,33 @@ module.exports = function(data){
         state["TS"]["n"] = parseInt(d.charAt(1));
         state["TS"]["d"] = parseInt(d.charAt(2));
       // Bar Lines
-      } else if (/^\{|\}|\[|\]|\|$/.test(d)) {
-        // if Bar contains something, push Bar into return
-        if (state["Bar"]["Data"].length>0) {
+      } else if (/^\{|\}|\[|\]|\||Z$/.test(d)) {
+        if (state["Bar"]["Data"].length>0) { // if Bar contains something, push Bar into return
           ret.push(state["Bar"]);
+          state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
             "Data": [],
             "Annotations": [],
           };
         }
-        // push Bar line type to return
         ret.push(d);
-      // Section
+      // Section Name
       } else if (/^\*[\w\W]/.test(d)) {
-        state["Section"] = d;
+        state["Section"]["Name"] = d;
       // Chord
       } else if (/^[A-G].+/.test(d)) {
         state["Bar"]["Data"].push(d);
       // Comments / Segno / Coda
-      } else if (/<.*?>/.test(d)) {
-        state["Bar"]["Annotations"].push(d)
+      } else if (/<.*?>|Q|S/.test(d)) {
+        state["Bar"]["Annotations"].push(d);
+      // One Bar Repeat
+      } else if (/x/.test(d)) {
+        ret.push(state["BarHistory"][state["BarHistory"].length-1]);
+      // Two Bar Repeat
+      } else if (/r/.test(d)) {
+        ret.push(state["BarHistory"][state["BarHistory"].length-1]);
+        ret.push(state["BarHistory"][state["BarHistory"].length-2]);
       }
-
     }
   }
 
