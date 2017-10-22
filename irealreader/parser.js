@@ -31,7 +31,7 @@ module.exports = function(data){
     "Section": "",
     "Bar": {
       "Data": [],
-      "Annotations": [], // could be comments, coda-start, coda-end
+      "Annotations": [], // could be comments, coda, segno, houses
     },
   }
 
@@ -45,16 +45,16 @@ module.exports = function(data){
 
   // DATA PREPROCESSING:
   data = data.replace(/XyQ|alt|[UY]/g, "");
-  data = data.replace(/\,|l/g," "); // replacing "l" will also replace on "Kcl"
+  data = data.replace(/\,/g," ");
   data = data.replace(/LZ/g,"|"); // this will also allow split on "Z"
 
   // DATA SPLITTING:
-  data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|Q|S)/);
+  data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kcl|x|<.*?>|Q|S)/);
   for (var i=0; i<data.length; i++) {
 
     // skip over empty items
-    var d = data[i].replace(/\s/g,"");
-    if (d=="") {
+    var d = data[i];
+    if (d.replace(/\s/g,"")=="") {
       continue;
     } else {
 
@@ -86,6 +86,9 @@ module.exports = function(data){
       // Chord
       } else if (/^[A-G].+/.test(d)) {
         state["Bar"]["Data"].push(d);
+      // Comments / Segno / Coda
+      } else if (/<.*?>/.test(d)) {
+        state["Bar"]["Annotations"].push(d)
       }
 
     }
