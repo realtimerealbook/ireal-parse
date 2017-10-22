@@ -1,4 +1,4 @@
-# iRealB General Legend
+# iReal Pro General Legend
 
 BARLINES
 ```

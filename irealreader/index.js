@@ -50,6 +50,8 @@ function chart(data, reg){
     var raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
     this.chartData = parser(raw);
 
+    console.log(this.chartData);
+
     // console.log("Final results:");
     // console.log(JSON.stringify(this, null, 2));
   }
