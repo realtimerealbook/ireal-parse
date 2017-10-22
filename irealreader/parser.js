@@ -112,7 +112,8 @@ module.exports = function(data){
         state["Bar"]["Annotations"].push(d);
       // One Bar Repeat
       } else if (/x/.test(d)) {
-        state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-1]);
+        // use slice to pass by value
+        state["Bar"]["Data"] = state["BarHistory"][state["BarHistory"].length-1]["Data"].slice();
       // Two Bar Repeat
       } else if (/r/.test(d)) {
         state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-2]);
