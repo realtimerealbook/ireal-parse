@@ -97,18 +97,22 @@ module.exports = function(data){
       } else if (/^\*[\w\W]/.test(d)) {
         state["Section"]["Name"] = d.charAt(1); // use char after *
       // Chord
-      } else if (/^[A-G].+/.test(d)) {
-        state["Bar"]["Data"].push(d);
-      // Comments / Coda / Segno
-      } else if (/<.*?>|Q|S/.test(d)) {
+      } else if (/^[A-G].+|^[sfl].+/.test(d)) {
+        if (/^[sl].+/.test(d)) {
+          state["Bar"]["Data"].push(d.substr(1)); // don't include "s" or "l" prefix
+        } else {
+          state["Bar"]["Data"].push(d);
+        }
+      // Comments / Coda / Segno / Houses
+      } else if (/<.*?>|Q|S|N\d/.test(d)) {
         state["Bar"]["Annotations"].push(d);
       // One Bar Repeat
       } else if (/x/.test(d)) {
         state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-1]);
       // Two Bar Repeat
       } else if (/r/.test(d)) {
-        state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-1]);
         state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-2]);
+        state["Section"]["Data"].push(state["BarHistory"][state["BarHistory"].length-1]);
       }
     }
   }
