@@ -36,7 +36,6 @@ SECTION
 
 UNRECOGNISABLE
 ```
-"l" - ?? (see Lush Life, My Funny Valentine, Tell me a bedtime story)
 "U" - ?? (see Mas Que Nada, Scrapple From The Apple, Triste, Wave)
 ```
 
@@ -53,5 +52,6 @@ other:
 "n" - N.C (see Butterfly)
 "p" - slash
 "s" - small chord (eg sC^7)
+"l" - large chord (eg lC^7)
 "f" - pause (see Butterfly, Summer Serenade)
 ```

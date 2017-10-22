@@ -23,11 +23,11 @@ module.exports = function(data){
   var ret = [];
 
   var state = {
-    // Time Signature: assume 4/4 if not stated (some charts have no time sig)
-    "TS": {
-      "n": 4, // not stored
-      "d": 4, // stored
+    "TimeSignature": { // assume 4/4 if not stated (some charts have no time sig)
+      "Numerator": 4, // not stored
+      "Denominator": 4, // stored
     },
+    "Size": "l", // assume size "l" if unstated
     "Section": {
       "Name": "",
       "Data": [], // Bars
@@ -64,19 +64,24 @@ module.exports = function(data){
 
       // use this to debug (find split strings that do not match pattern)
       // see this: https://stackoverflow.com/questions/406230/regular-expression-to-match-a-line-that-doesnt-contain-a-word
-      if (/^((?!\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|[A-G]+|Q|S|n|s+|f+|r).)*$/g.test(d)) {
+      if (/^((?!\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|[A-G|slf]+|[QSnr]).)*$/g.test(d)) {
         console.log(d);
       }
 
       // Time Signature
       if (/T\d\d/.test(d)) {
-        state["TS"]["n"] = parseInt(d.charAt(1));
-        state["TS"]["d"] = parseInt(d.charAt(2));
+        state["TimeSignature"]["Numerator"] = parseInt(d.charAt(1));
+        state["TimeSignature"]["Denominator"] = parseInt(d.charAt(2));
       // Bar Lines, including Section Openers
       } else if (/^\{|\[|\||\}|\]|\Z$/.test(d)) {
         // Bar Closure (if length>0), push Bar to Section
         if (state["Bar"]["Data"].length>0) {
-          state["Bar"]["Denominator"] = state["TS"]["d"];
+          // iReal Pro parses chord length via the "s" and "l" prefixes
+          // "s" will mean a chord length of 1, "l" will mean a chord length of 2
+          // Examples:
+          // Stormy Weather (T44): "sG6/D","D#o","lE-7" -> "G6/D","D#o","E-7",""
+          // Lush Life (T44): "Db-6","sGh","C7" -> "Db-6","","Gh","C7"
+          state["Bar"]["Denominator"] = state["TimeSignature"]["Denominator"];
           state["Section"]["Data"].push(state["Bar"]);
           state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
@@ -97,12 +102,11 @@ module.exports = function(data){
       } else if (/^\*[\w\W]/.test(d)) {
         state["Section"]["Name"] = d.charAt(1); // use char after *
       // Chord
-      } else if (/^[A-G].+|^[sfl].+/.test(d)) {
-        if (/^[sl].+/.test(d)) {
-          state["Bar"]["Data"].push(d.substr(1)); // don't include "s" or "l" prefix
-        } else {
-          state["Bar"]["Data"].push(d);
-        }
+      } else if (/^[A-G|f].+/.test(d)) {
+        state["Bar"]["Data"].push(state["Size"]+d); // force s/l prefix
+      } else if (/^[sl].+/.test(d)) {
+        state["Size"] = d.charAt(0);
+        state["Bar"]["Data"].push(d);
       // Comments / Coda / Segno / Houses
       } else if (/<.*?>|Q|S|N\d/.test(d)) {
         state["Bar"]["Annotations"].push(d);
