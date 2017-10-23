@@ -52,7 +52,7 @@ module.exports = function(data){
   data = data.replace(/LZ/g,"|"); // this will also allow split on "Z"
 
   // DATA SPLITTING:
-  data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S)/);
+  data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S|s|l)/);
   for (var i=0; i<data.length; i++) {
 
     var d = data[i];
@@ -104,9 +104,9 @@ module.exports = function(data){
       // Chord
       } else if (/^[A-G|f].+/.test(d)) {
         state["Bar"]["Data"].push(state["Size"]+d); // force s/l prefix
-      } else if (/^[sl].+/.test(d)) {
-        state["Size"] = d.charAt(0);
-        state["Bar"]["Data"].push(d);
+      // S / L prefix
+      } else if (/^s|l$/.test(d)) {
+        state["Size"] = d;
       // Comments / Coda / Segno / Houses
       } else if (/<.*?>|Q|S|N\d/.test(d)) {
         state["Bar"]["Annotations"].push(d);
