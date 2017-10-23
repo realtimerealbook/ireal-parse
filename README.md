@@ -8,7 +8,11 @@ A good portion of the code here is adapted from pianosnake's [ireal-reader](http
 
 ## Usage
 
-First configure `list.txt` to contain the list of file names we want to parse and test (to *parse all 1300 charts*, simply leave `list.txt` blank). The complete list of available charts in `1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs). File names should be separated by a new line, with spaces replaced by underscores, and special characters escaped. For example
+First create the directory `data_out/` in your home folder, then configure `list.txt` to contain the list of file names we want to parse and test. To *parse all 1300 charts*, simply leave `list.txt` blank.
+
+The complete list of available charts in `1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs).
+
+File names should be separated by a new line, with spaces replaced by underscores, and special characters escaped. For example
 ```
 Fly_Me_To_The_Moon
 Got_A_Match\?
@@ -27,7 +31,7 @@ Your output should now be in `data_out/<title>.json`.
 
 ## Testing
 
-To test that your output matches the expected output, first configure `list.txt` to include the names of files you want to test. Ensure that the correctly parsed files are in `data_out_test/<filename>.json`, then run
+To test that your output matches the expected output, first configure `list.txt` to include the names of files you want to test. Create the directory `data_out_test/` in your home folder and ensure that the correctly parsed files are in `data_out_test/<filename>.json`, then run
 ```js
 node test
 ```
