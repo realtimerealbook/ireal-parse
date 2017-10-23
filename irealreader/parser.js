@@ -118,8 +118,9 @@ module.exports = function(data){
             };
           };
 
-          state["Bar"]["Denominator"] = state["TimeSignature"]["Denominator"];
-          state["Section"]["Data"].push({"Data":bardata, "Annotations":state["Bar"]["Annotations"]});
+          state["Section"]["Data"].push({"Data":bardata,
+                                         "Annotations":state["Bar"]["Annotations"],
+                                         "Denominator":state["TimeSignature"]["Denominator"]});
           state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
             "Data": [],

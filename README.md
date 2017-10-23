@@ -27,7 +27,7 @@ Ensure that `data_in/1300.txt` is available, then simply run
 node parse
 ```
 
-Your output should now be in `data_out/<title>.json`.
+Your output should now be in `data_out/<filename>.json`.
 
 ## Testing
 
@@ -35,3 +35,7 @@ To test that your output matches the expected output, first configure `list.txt`
 ```js
 node test
 ```
+
+## Inserting into RethinkDB
+
+Coming soon!
