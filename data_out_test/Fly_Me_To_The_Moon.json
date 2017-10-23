@@ -5,302 +5,336 @@
   "key": "C",
   "chartData": [
     {
-      "sectionData": [
+      "Name": "A",
+      "Data": [
+        "[",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "A-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "D-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "G7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "C^7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "F^7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "Bh7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "E7b9",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "A-7",
             "",
             "A7",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "D-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "G7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "C^7",
             "",
             "F7",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "E-7",
             "",
             "A7",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "D-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "G7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "C^7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "Bh7",
             "",
             "E7b9",
             ""
-          ]
-        }
-      ],
-      "sectionName": "A"
+          ],
+          "Annotations": []
+        },
+        "]"
+      ]
     },
     {
-      "sectionData": [
+      "Name": "B",
+      "Data": [
+        "[",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "A-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "D-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "G7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "C^7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "F^7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "Bh7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "E7b9",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "A-7",
             "",
             "A7",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "D-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "G7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "E-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "A7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "D-7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "G7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "C^7",
             "",
             "",
             ""
-          ]
+          ],
+          "Annotations": []
         },
+        "|",
         {
-          "denominator": 4,
-          "barData": [
+          "Data": [
             "Bh7",
             "",
             "E7b9",
             ""
-          ]
-        }
-      ],
-      "sectionName": "B"
+          ],
+          "Annotations": []
+        },
+        "Z"
+      ]
     }
   ]
 }
