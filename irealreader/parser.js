@@ -76,13 +76,50 @@ module.exports = function(data){
       } else if (/^\{|\[|\||\}|\]|\Z$/.test(d)) {
         // Bar Closure (if length>0), push Bar to Section
         if (state["Bar"]["Data"].length>0) {
-          // iReal Pro parses chord length via the "s" and "l" prefixes
-          // "s" will mean a chord length of 1, "l" will mean a chord length of 2
-          // Examples:
+          // make a copy of the bar to avoid pass-by-ref error, this is because
+          // we might deal with the same object twice if the chart contains "x",
+          // "Kcl" or "r"
+          var bardata = state["Bar"]["Data"].slice();
+
+          // length 1 or full length:
+          // ["lC"], T44 -> ["C","","",""]
+          // ["sC","sD","sE","sF"], T44 -> ["C","D","E","F"]
+          if (bardata.length==1 || bardata.length==state["TimeSignature"]["Numerator"]) {
+            // strip s/l prefix
+            for (var j=0; j<bardata.length; j++) {
+              bardata[j] = bardata[j].substr(1);
+            };
+            // fill in remaining space with ""
+            for (var j=bardata.length; j<state["TimeSignature"]["Numerator"]; j++) {
+              bardata.push("");
+            };
+          // half length:
+          // ["lC","lD"], T44 -> ["C","","D",""]
+          } else if (bardata.length==state["TimeSignature"]["Numerator"]/2) {
+            // strip s/l prefix
+            for (var j=0; j<bardata.length; j++) {
+              bardata[j] = bardata[j].substr(1);
+            };
+            // insert "" inbetween array
+            for (var j=1; j<state["TimeSignature"]["Numerator"]; j+=2) {
+              bardata.splice(j,0,"");
+            };
+          // other lengths: probably a bar of length 3 in T44
+          // iReal Pro implies chord length via the "s" and "l" (small/large) prefixes
           // Stormy Weather (T44): "sG6/D","D#o","lE-7" -> "G6/D","D#o","E-7",""
           // Lush Life (T44): "Db-6","sGh","C7" -> "Db-6","","Gh","C7"
+          } else {
+            for (var j=0; j<bardata.length; j++) {
+              var prefix = bardata[j].charAt(0);
+              bardata[j] = bardata[j].substr(1); // strip s/l prefix
+              if (prefix=="l") { // insert "" if prefix is "l"
+                bardata.splice(j+1,0,"");
+              }
+            };
+          };
+
           state["Bar"]["Denominator"] = state["TimeSignature"]["Denominator"];
-          state["Section"]["Data"].push(state["Bar"]);
+          state["Section"]["Data"].push({"Data":bardata, "Annotations":state["Bar"]["Annotations"]});
           state["BarHistory"].push(state["Bar"]);
           state["Bar"] = {
             "Data": [],
