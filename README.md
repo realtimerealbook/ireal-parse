@@ -31,7 +31,7 @@ Your output should now be in `data_out/<filename>.json`.
 
 ## Testing
 
-To test that your output matches the expected output, first configure `list.txt` to include the names of files you want to test. Create the directory `data_out_test/` in your home folder and ensure that the correctly parsed files are in `data_out_test/<filename>.json`, then run
+To test that your output matches the expected output, create the directory `data_out_test/` in your home folder and ensure that the correctly parsed files are in `data_out_test/<filename>.json`. Then simply run
 ```js
 node test
 ```

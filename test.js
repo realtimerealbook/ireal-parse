@@ -1,11 +1,10 @@
-// took this from https://github.com/nodejs/node/pull/4609/files
-const readline = require('readline');
 const fs = require('fs');
-const rl = readline.createInterface({
-  input: fs.createReadStream('list.txt')
-})
-rl.on('line', function(line) {
-  compareJSON(line);
+var dir = 'data_out_test';
+fs.readdir(dir, (err, files) => {
+  if (err) throw err;
+  for (const file of files) {
+    compareJSON(file.slice(0,-5)); // remove ".json" extension
+  }
 })
 
 // compares equality of 2 json files in data_out and data_out_test
