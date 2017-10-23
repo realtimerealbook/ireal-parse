@@ -50,6 +50,7 @@ module.exports = function(data){
   data = data.replace(/\,/g," ");
   data = data.replace(/Kcl/g,"|x");
   data = data.replace(/LZ/g,"|"); // this will also allow split on "Z"
+  data = data.replace(/p/g, "p "); // treat p (slash) like a chord
 
   // DATA SPLITTING:
   data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S|s|l)/);
@@ -64,7 +65,7 @@ module.exports = function(data){
 
       // use this to debug (find split strings that do not match pattern)
       // see this: https://stackoverflow.com/questions/406230/regular-expression-to-match-a-line-that-doesnt-contain-a-word
-      if (/^((?!\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|[A-G|slf]+|[QSnr]).)*$/g.test(d)) {
+      if (/^((?!\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|Kc|x|<.*?>|[A-G|slf]+|[QSnrp]).)*$/g.test(d)) {
         console.log(d);
       }
 
@@ -76,9 +77,8 @@ module.exports = function(data){
       } else if (/^\{|\[|\||\}|\]|\Z$/.test(d)) {
         // Bar Closure (if length>0), push Bar to Section
         if (state["Bar"]["Data"].length>0) {
-          // make a copy of the bar to avoid pass-by-ref error, this is because
-          // we might deal with the same object twice if the chart contains "x",
-          // "Kcl" or "r"
+
+          // make a copy of the bar to avoid pass-by-ref error
           var bardata = state["Bar"]["Data"].slice();
 
           // length 1 or full length:
@@ -140,7 +140,7 @@ module.exports = function(data){
       } else if (/^\*[\w\W]/.test(d)) {
         state["Section"]["Name"] = d.charAt(1); // use char after *
       // Chord
-      } else if (/^[A-G|f].+/.test(d)) {
+      } else if (/^[A-G|f|W].+|^[pn]$/.test(d)) {
         state["Bar"]["Data"].push(state["Size"]+d); // force s/l prefix
       // S / L prefix
       } else if (/^s|l$/.test(d)) {
