@@ -8,9 +8,9 @@ A good portion of the code here is adapted from pianosnake's [ireal-reader](http
 
 ## Usage
 
-First create the directory `data_out/` in your home folder, then configure `list.txt` to contain the list of file names we want to parse and test. To *parse all 1300 charts*, simply leave `list.txt` blank.
+First create the directory `data_out/` in your home folder, then configure `data_in/list.txt` to contain the list of file names we want to parse and test. To *parse all 1300 charts*, simply leave `data_in/list.txt` blank.
 
-The complete list of available charts in `1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs).
+The complete list of 1300 chart names in `data_in/1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs).
 
 File names should be separated by a new line, with spaces replaced by underscores, and special characters escaped. For example
 ```
@@ -31,7 +31,7 @@ Your output should now be in `data_out/<filename>.json`.
 
 ## Testing
 
-To test that your output matches the expected output, create the directory `data_out_test/` in your home folder and ensure that the correctly parsed files are in `data_out_test/<filename>.json`. Then simply run
+To test that your output matches the expected output, create the directory `data_out_test/` in your home folder and place your expected output in `data_out_test/<filename>.json`. Then simply run
 ```js
 node test
 ```
@@ -51,4 +51,9 @@ rethinkdb
 Then simply run
 ```js
 node insert
+```
+
+You can check that your charts are properly inserted by navigating to the rethinkdb [data explorer](http://localhost:8080/#dataexplorer), and running the `get` command on any of the tables
+```js
+r.table("charts")
 ```
