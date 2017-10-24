@@ -38,4 +38,17 @@ node test
 
 ## Inserting into RethinkDB
 
-Coming soon!
+First make sure that the [`RethinkDB javascript driver`](https://www.rethinkdb.com/docs/install-drivers/javascript/) is installed.
+```js
+npm install rethinkdb
+```
+
+Launch the [`rtrb-api`](https://github.com/realtimerealbook/rtrb-api) rethinkdb instance from the `rtrb-api` directory.
+```js
+rethinkdb
+```
+
+Then simply run
+```js
+node insert
+```
