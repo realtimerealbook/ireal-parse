@@ -11,7 +11,7 @@ fs.readdir(dir, (err, files) => {
     });
   }
   // parse and output files to "data_out/"
-  var files = fs.readFileSync("list.txt", "utf-8");
+  var files = fs.readFileSync("data_in/list.txt", "utf-8");
   var reg;
   if (files==""){
     // if file is empty, parse all 1300 files

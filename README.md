@@ -2,7 +2,7 @@
 
 This is a script that selectively parses charts from the [ireal pro 1300 jazz standards](https://www.irealb.com/forums/showthread.php?12753-Jazz-1300-Standards) into a convenient JSON format, with the intention of inserting them into the rtrb database.
 
-![Alt Text](https://github.com/realtimerealbook/ireal-parse/raw/master/demo.gif)
+![Alt Text](https://github.com/realtimerealbook/ireal-parse/raw/master/img/demo.gif)
 
 A good portion of the code here is adapted from pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader).
 
