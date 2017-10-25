@@ -57,3 +57,17 @@ You can check that your charts are properly inserted by navigating to the rethin
 ```js
 r.table("charts")
 ```
+
+Other useful commands may include querying bar data for a chart by its id
+```js
+r.table("charts").get("015ca951-b683-43a4-9b4e-ea83c30bb276")("ChartData").map(function(val) {
+	return r.table("bars").get(val)
+})
+```
+
+Or querying by title
+```js
+r.table("charts").filter({"Title":"Butterfly"})(0)("ChartData").map(function(val) {
+	return r.table("bars").get(val);
+})
+```
