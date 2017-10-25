@@ -9,7 +9,7 @@ function iRealReader(data, reg){
   const percentEncoded = regex.exec(data);
   const percentDecoded = decodeURIComponent(percentEncoded[1]);
   var parts = percentDecoded.split("===");  // songs are separated by ===
-  if(parts.length > 1) this.name = parts.pop();  // playlist name
+  if(parts.length > 1) this.Name = parts.pop();  // playlist name
   this.songs = parts.map(x => new chart(x, reg));
 }
 
@@ -30,28 +30,25 @@ function chart(data, reg){
     console.log("Parsing data for:",parts[0]);
 
     // get title
-    this.title = parts[0];
+    this.Title = parts[0];
 
     // get composer: reverse first and last names
     if (parts[1].split(" ").length == 2) {
       let spl = parts[1].split(" ");
-      this.composer = spl[1] + " " + spl[0];
+      this.Composer = spl[1] + " " + spl[0];
     } else {
-      this.composer = parts[1];
+      this.Composer = parts[1];
     }
 
     // get style (eg. Medium Swing, Ballad etc.)
-    this.style = parts[2];
+    this.Style = parts[2];
 
     // get key (eg. Eb, C- etc.)
-    this.key = parts[3];
+    this.Key = parts[3];
 
     // get chart data
     var raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
-    this.chartData = parser(raw);
-
-    // console.log("Final results:");
-    // console.log(JSON.stringify(this, null, 2));
+    this.ChartData = parser(raw);
   }
 }
 
