@@ -37,9 +37,9 @@ fs.readdir(dirOutput, (err, outFiles) => {
   fs.readFile(`${dirInput}/1300.txt`, (err, data) => {
     if (err) throw err;
 
-    parsed = new iRealReader(data, reg);
+    const parsed = new iRealReader(data, reg);
 
-    for (i = 0; i < parsed.songs.length; i++) {
+    for (let i = 0; i < parsed.songs.length; i++) {
       if (parsed.songs[i].Title) {
         // don't save empty objects {}
         const fn = parsed.songs[i].Title.replace(/\s/g, '_');

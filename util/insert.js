@@ -1,4 +1,3 @@
-const async = require('async');
 const r = require('rethinkdb');
 const fs = require('fs');
 const path = require('path');
@@ -20,22 +19,22 @@ function insertchart(f, conn){
   f.ChartData = [];
 
   // insert chart
-  r.table("charts").insert(f).run(conn, function(err, res) {
+  r.table('charts').insert(f).run(conn, function(err, res) {
     if (err) throw err;
 
     const chartID = res.generated_keys[0];
-    console.log("Inserted chart with key", chartID);
+    console.log('Inserted chart with key', chartID);
 
     // insert bars (insert in a batch)
-    r.table("bars").insert(chartData).run(conn, function(err, res) {
+    r.table('bars').insert(chartData).run(conn, function(err, res) {
       if (err) throw err;
 
       const barIDs = res.generated_keys;
       
       // append barID to chart
-      r.table("charts").get(chartID).update({
-        "ChartData": barIDs,
-      }).run(conn, function(err, res) {
+      r.table('charts').get(chartID).update({
+        'ChartData': barIDs,
+      }).run(conn, function(err) {
         if (err) throw err;
       });
     });
