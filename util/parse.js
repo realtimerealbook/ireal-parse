@@ -1,37 +1,54 @@
 const fs = require('fs');
 const path = require('path');
-const iRealReader = require('./irealreader/index');
+const iRealReader = require('../src');
 
-var dir = 'data_out';
-fs.readdir(dir, (err, files) => {
+const dirInput = '../data_in';
+const dirOutput = '../data_out';
+
+fs.readdir(dirOutput, (err, outFiles) => {
   if (err) throw err;
-  for (const file of files) {
-    fs.unlink(path.join(dir, file), err => {
+
+  // Delete existing files in output directory.
+  for (const file of outFiles) {
+    fs.unlink(path.join(dirOutput, file), err => {
       if (err) throw err;
     });
   }
+
   // parse and output files to "data_out/"
-  var files = fs.readFileSync("data_in/list.txt", "utf-8");
-  var reg;
-  if (files==""){
+  const inFiles = fs.readFileSync(`${dirInput}/list.txt`, 'utf-8');
+  let reg;
+
+  if (inFiles == '') {
     // if file is empty, parse all 1300 files
-    reg = new RegExp("");
+    reg = new RegExp('');
   } else {
     // else match for exact file names from list.txt eg. "abc\ndef" -> /^abc$|^def$/
-    reg = new RegExp(files.split("\n").map(function(x){return "^"+x+"$"}).join("|"));
+    reg = new RegExp(
+      inFiles
+        .split('\n')
+        .map(x => `^${x}$`)
+        .join('|')
+    );
   }
-  var ii = 1;
-  fs.readFile('data_in/1300.txt', (err, data) => {
+
+  let ii = 1;
+
+  fs.readFile(`${dirInput}/1300.txt`, (err, data) => {
     if (err) throw err;
+
     parsed = new iRealReader(data, reg);
-    for (i=0; i<parsed.songs.length; i++){
-      if (parsed.songs[i].Title) { // don't save empty objects {}
-        var fn = parsed.songs[i].Title.replace(/\s/g,"_");
-        fs.writeFile('data_out/'+fn+'.json', JSON.stringify(parsed.songs[i],null,2), (err) => {
+
+    for (i = 0; i < parsed.songs.length; i++) {
+      if (parsed.songs[i].Title) {
+        // don't save empty objects {}
+        const fn = parsed.songs[i].Title.replace(/\s/g, '_');
+
+        fs.writeFile(`${dirOutput}/${fn}.json`, JSON.stringify(parsed.songs[i], null, 2), err => {
           if (err) throw err;
-        })
-        console.log("Saved file (" + ii.toString() + "/" + files.split("\n").length.toString() + ","
-                                   + (i+1).toString() + "/" + parsed.songs.length.toString() + "): "+fn);
+        });
+
+        console.log(`Saved file (${ii}/${inFiles.split('\n').length},${i + 1}/${parsed.songs.length}): ${fn}`);
         ii++;
       }
     }
