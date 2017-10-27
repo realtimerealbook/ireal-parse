@@ -54,7 +54,8 @@ module.exports = function(data) {
       if (/T\d\d/.test(d)) {
         state['TimeSignature']['Numerator'] = parseInt(d.charAt(1));
         state['TimeSignature']['Denominator'] = parseInt(d.charAt(2));
-        // Bar Lines, including Section Openers
+
+      // Bar Lines, including Section Openers
       } else if (/^\{|\[|\||\}|\]|Z$/.test(d)) {
         // push Bar to Section
         // make a copy of the bar to avoid pass-by-ref error
@@ -73,8 +74,9 @@ module.exports = function(data) {
           for (let j = bardata.length; j < state['TimeSignature']['Numerator']; j++) {
             bardata.push('');
           }
-          // half length:
-          // ["lC","lD"], T44 -> ["C","","D",""]
+
+        // half length:
+        // ["lC","lD"], T44 -> ["C","","D",""]
         } else if (bardata.length == state['TimeSignature']['Numerator'] / 2) {
           // strip s/l prefix
           for (let j = 0; j < bardata.length; j++) {
@@ -84,10 +86,11 @@ module.exports = function(data) {
           for (let j = 1; j < state['TimeSignature']['Numerator']; j += 2) {
             bardata.splice(j, 0, '');
           }
-          // other lengths: probably a bar of length 3 in T44
-          // iReal Pro implies chord length via the "s" and "l" (small/large) prefixes
-          // Stormy Weather (T44): "sG6/D","D#o","lE-7" -> "G6/D","D#o","E-7",""
-          // Lush Life (T44): "Db-6","sGh","C7" -> "Db-6","","Gh","C7"
+
+        // other lengths: probably a bar of length 3 in T44
+        // iReal Pro implies chord length via the "s" and "l" (small/large) prefixes
+        // Stormy Weather (T44): "sG6/D","D#o","lE-7" -> "G6/D","D#o","E-7",""
+        // Lush Life (T44): "Db-6","sGh","C7" -> "Db-6","","Gh","C7"
         } else {
           for (let j = 0; j < bardata.length; j++) {
             let prefix = bardata[j].charAt(0);
@@ -114,23 +117,23 @@ module.exports = function(data) {
           Annotations: [],
         };
 
-        // Section Name
+      // Section Name
       } else if (/^\*[\w\W]/.test(d)) {
         state['Bar']['Annotations'].push(d); // include the * for clarity
-        // Chord
+      // Chord
       } else if (/^[A-G|f|W].+|^[pn]$/.test(d)) {
         state['Bar']['BarData'].push(state['Size'] + d); // force s/l prefix
-        // S / L prefix
+      // S / L prefix
       } else if (/^s|l$/.test(d)) {
         state['Size'] = d;
-        // Comments / Coda / Segno / Houses
+      // Comments / Coda / Segno / Houses
       } else if (/<.*?>|Q|S|N\d/.test(d)) {
         state['Bar']['Annotations'].push(d);
-        // One Bar Repeat
+      // One Bar Repeat
       } else if (/x/.test(d)) {
         // use slice to pass by value
         state['Bar']['BarData'] = state['BarHistory'][state['BarHistory'].length - 1]['BarData'].slice();
-        // Two Bar Repeat
+      // Two Bar Repeat
       } else if (/r/.test(d)) {
         ret.push(state['BarHistory'][state['BarHistory'].length - 2]);
         ret.push(state['BarHistory'][state['BarHistory'].length - 1]);
