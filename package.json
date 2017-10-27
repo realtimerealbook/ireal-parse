@@ -1,0 +1,25 @@
+{
+  "name": "ireal-parse",
+  "version": "0.1.0",
+  "description": "Parses iReal Pro chart data into JSON for Realtime Realbook",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realtimerealbook/ireal-parse.git"
+  },
+  "author": {
+    "name": "Realtime Realbook",
+    "url": "https://github.com/realtimerealbook"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/realtimerealbook/ireal-parse/issues"
+  },
+  "homepage": "https://github.com/realtimerealbook/ireal-parse#readme",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier-eslint": "^8.2.1"
+  }
+}
