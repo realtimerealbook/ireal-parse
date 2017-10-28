@@ -85,14 +85,17 @@ module.exports = function(data) {
 
           // half length:
           // ["lC","lD"], T44 -> ["C","","D",""]
-          } else if (bardata.length == state['TimeSignature']['Numerator'] / 2) {
+          // ["lG","lF"], T64 -> ["G","","","F","",""]
+          } else if (bardata.length == 2 && state['TimeSignature']['Numerator'] % 2 == 0) {
             // strip s/l prefix
             for (let j = 0; j < bardata.length; j++) {
               bardata[j] = bardata[j].substr(1);
             }
             // insert "" inbetween array
-            for (let j = 1; j < state['TimeSignature']['Numerator']; j += 2) {
-              bardata.splice(j, 0, '');
+            for (let j = 0; j < state['TimeSignature']['Numerator']; j+=state['TimeSignature']['Numerator']/2) {
+              for (let k = 1; k < state['TimeSignature']['Numerator']/2; k++) {
+                bardata.splice(j+k, 0, '');
+              }
             }
 
           // other lengths: probably a bar of length 3 in T44
