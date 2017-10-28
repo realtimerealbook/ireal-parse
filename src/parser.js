@@ -130,7 +130,7 @@ module.exports = function(data) {
       } else if (/^\*[\w\W]/.test(d)) {
         state['Bar']['Annotations'].push(d); // include the * for clarity
       // Chord
-      } else if (/^[A-G|f|W].+|^[pn]$/.test(d)) {
+      } else if (/^[A-G|f|W].*|^[pn]$/.test(d)) {
         d = d.replace(/u/g, 'sus'); // sus previously replaced with u
         state['Bar']['BarData'].push(state['Size'] + d); // force s/l prefix
       // S / L prefix
