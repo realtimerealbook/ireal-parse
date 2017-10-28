@@ -55,74 +55,84 @@ module.exports = function(data) {
         state['TimeSignature']['Numerator'] = parseInt(d.charAt(1));
         state['TimeSignature']['Denominator'] = parseInt(d.charAt(2));
 
-      // Bar Lines, including Section Openers
+      // Bar Lines
       } else if (/^\{|\[|\||\}|\]|Z$/.test(d)) {
-        // push Bar to Section
-        // make a copy of the bar to avoid pass-by-ref error
-        let bardata = state['Bar']['BarData'].slice();
 
-        // process the bar to obtain the full numerator length:
-        // length 1 or full length:
-        // ["lC"], T44 -> ["C","","",""]
-        // ["sC","sD","sE","sF"], T44 -> ["C","D","E","F"]
-        if (bardata.length <= 1 || bardata.length == state['TimeSignature']['Numerator']) {
-          // strip s/l prefix
-          for (let j = 0; j < bardata.length; j++) {
-            bardata[j] = bardata[j].substr(1);
-          }
-          // fill in remaining space with ""
-          for (let j = bardata.length; j < state['TimeSignature']['Numerator']; j++) {
-            bardata.push('');
-          }
+        if (state['Bar']['BarData'].length==0 &&
+            ret.length>0) {
 
-        // half length:
-        // ["lC","lD"], T44 -> ["C","","D",""]
-        } else if (bardata.length == state['TimeSignature']['Numerator'] / 2) {
-          // strip s/l prefix
-          for (let j = 0; j < bardata.length; j++) {
-            bardata[j] = bardata[j].substr(1);
-          }
-          // insert "" inbetween array
-          for (let j = 1; j < state['TimeSignature']['Numerator']; j += 2) {
-            bardata.splice(j, 0, '');
-          }
+          // if two barlines come in a row, add barline to previous bar
+          ret[ret.length-1]['End_Barline'] = ret[ret.length-1]['End_Barline'] + d;
 
-        // other lengths: probably a bar of length 3 in T44
-        // iReal Pro implies chord length via the "s" and "l" (small/large) prefixes
-        // Stormy Weather (T44): "sG6/D","D#o","lE-7" -> "G6/D","D#o","E-7",""
-        // Lush Life (T44): "Db-6","sGh","C7" -> "Db-6","","Gh","C7"
         } else {
-          for (let j = 0; j < bardata.length; j++) {
-            let prefix = bardata[j].charAt(0);
-            bardata[j] = bardata[j].substr(1); // strip s/l prefix
-            if (prefix == 'l') {
-              // insert "" if prefix is "l"
-              bardata.splice(j + 1, 0, '');
+
+          // push Bar to Section
+          // make a copy of the bar to avoid pass-by-ref error
+          let bardata = state['Bar']['BarData'].slice();
+
+          // process the bar to obtain the full numerator length:
+          // length 1 or full length:
+          // ["lC"], T44 -> ["C","","",""]
+          // ["sC","sD","sE","sF"], T44 -> ["C","D","E","F"]
+          if (bardata.length <= 1 || bardata.length == state['TimeSignature']['Numerator']) {
+            // strip s/l prefix
+            for (let j = 0; j < bardata.length; j++) {
+              bardata[j] = bardata[j].substr(1);
+            }
+            // fill in remaining space with ""
+            for (let j = bardata.length; j < state['TimeSignature']['Numerator']; j++) {
+              bardata.push('');
+            }
+
+          // half length:
+          // ["lC","lD"], T44 -> ["C","","D",""]
+          } else if (bardata.length == state['TimeSignature']['Numerator'] / 2) {
+            // strip s/l prefix
+            for (let j = 0; j < bardata.length; j++) {
+              bardata[j] = bardata[j].substr(1);
+            }
+            // insert "" inbetween array
+            for (let j = 1; j < state['TimeSignature']['Numerator']; j += 2) {
+              bardata.splice(j, 0, '');
+            }
+
+          // other lengths: probably a bar of length 3 in T44
+          // iReal Pro implies chord length via the "s" and "l" (small/large) prefixes
+          // Stormy Weather (T44): "sG6/D","D#o","lE-7" -> "G6/D","D#o","E-7",""
+          // Lush Life (T44): "Db-6","sGh","C7" -> "Db-6","","Gh","C7"
+          } else {
+            for (let j = 0; j < bardata.length; j++) {
+              let prefix = bardata[j].charAt(0);
+              bardata[j] = bardata[j].substr(1); // strip s/l prefix
+              if (prefix == 'l') {
+                // insert "" if prefix is "l"
+                bardata.splice(j + 1, 0, '');
+              }
             }
           }
+
+          // push the fully formed bar into chartdata
+          ret.push({
+            BarData: bardata,
+            Annotations: state['Bar']['Annotations'],
+            Denominator: state['TimeSignature']['Denominator'],
+            End_Barline: d,
+          });
+
+          // push bar to history and reset
+          state['BarHistory'].push(state['Bar']);
+          state['Bar'] = {
+            BarData: [],
+            Annotations: [],
+          };
         }
-
-        // push the fully formed bar into chartdata
-        ret.push({
-          BarData: bardata,
-          Annotations: state['Bar']['Annotations'],
-          Denominator: state['TimeSignature']['Denominator'],
-          End_Barline: d,
-        });
-
-        // push bar to history and reset
-        state['BarHistory'].push(state['Bar']);
-        state['Bar'] = {
-          BarData: [],
-          Annotations: [],
-        };
 
       // Section Name
       } else if (/^\*[\w\W]/.test(d)) {
         state['Bar']['Annotations'].push(d); // include the * for clarity
       // Chord
       } else if (/^[A-G|f|W].+|^[pn]$/.test(d)) {
-        d = d.replace(/u/g, "sus"); // "sus" previously replaced with "u"
+        d = d.replace(/u/g, 'sus'); // sus previously replaced with u
         state['Bar']['BarData'].push(state['Size'] + d); // force s/l prefix
       // S / L prefix
       } else if (/^s|l$/.test(d)) {
