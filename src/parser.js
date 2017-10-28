@@ -58,8 +58,7 @@ module.exports = function(data) {
       // Bar Lines
       } else if (/^\{|\[|\||\}|\]|Z$/.test(d)) {
 
-        if (state['Bar']['BarData'].length==0 &&
-            ret.length>0) {
+        if (state['Bar']['BarData'].length==0 && ret.length>0) {
 
           // if two barlines come in a row, add barline to previous bar
           ret[ret.length-1]['End_Barline'] = ret[ret.length-1]['End_Barline'] + d;
@@ -151,6 +150,22 @@ module.exports = function(data) {
       }
     }
   }
+
+  // DATA PREPROCESSING:
+
+  // if section names come before the section opening barline,
+  // move the section name from the pickup bar to the next bar
+  if (ret[0]['Annotations'].length>0) {
+    ret[1]['Annotations'].push(ret[0]['Annotations'][0])
+    ret[0]['Annotations'] = [];
+  }
+
+  // pickup bar should be empty and have the same time signature as the next bar
+  ret[0]['BarData'] = [];
+  for (let j = 0; j < ret[1]['BarData'].length; j++) {
+    ret[0]['BarData'].push("");
+  }
+  ret[0]['Denominator'] = ret[1]['Denominator'];
 
   return ret;
 };
