@@ -1,4 +1,4 @@
-# ireal-parse
+# ireal-parse [![Build Status](https://travis-ci.org/realtimerealbook/ireal-parse.svg?branch=master)](https://travis-ci.org/realtimerealbook/ireal-parse)
 
 This is a script that selectively parses charts from the [iReal Pro Jazz 1300 Standards](https://www.irealb.com/forums/showthread.php?12753-Jazz-1300-Standards) into a convenient JSON format, with the intention of inserting them into the rtrb database.
 
