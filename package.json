@@ -24,5 +24,8 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint **/*.js"
+  },
+  "dependencies": {
+    "lint": "^1.1.2"
   }
 }

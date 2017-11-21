@@ -45,7 +45,7 @@ function chart(data, reg) {
     this.Key = parts[3];
 
     // add CreatedBy
-    this.CreatedBy = "rtrb.io";
+    this.CreatedBy = 'rtrb.io';
 
     // get chart data
     var raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
