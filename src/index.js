@@ -30,12 +30,12 @@ function chart(data, reg) {
     // get title
     this.Title = parts[0];
 
-    // get composer: reverse first and last names
+    // get artist: reverse first and last names
     if (parts[1].split(' ').length == 2) {
       let spl = parts[1].split(' ');
-      this.Composer = spl[1] + ' ' + spl[0];
+      this.Artist = spl[1] + ' ' + spl[0];
     } else {
-      this.Composer = parts[1];
+      this.Artist = parts[1];
     }
 
     // get style (eg. Medium Swing, Ballad etc.)
