@@ -44,8 +44,16 @@ function chart(data, reg) {
     // get key (eg. Eb, C- etc.)
     this.Key = parts[3];
 
-    // add CreatedBy
+    // add rtrb-specific fields
     this.CreatedBy = 'rtrb.io';
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    this.DateCreated = date;
+    this.LastUpdated = date;
+    this.Clones = 0;
+    this.TotalRating = 0;
+    this.Ratings = 0;
+    this.Score = 0;
 
     // get chart data
     var raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
