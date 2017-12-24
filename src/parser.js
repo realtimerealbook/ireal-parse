@@ -112,16 +112,17 @@ module.exports = function(data) {
             }
           }
 
-          // push the fully formed bar into chartdata
-          ret.push({
-            BarData: bardata,
-            Annotations: state['Bar']['Annotations'],
-            Denominator: state['TimeSignature']['Denominator'],
-            End_Barline: d,
-          });
+          // push the fully formed bar into chartdata and barhistory
+          [ret, state['BarHistory']].forEach((arr) => {
+            arr.push({
+              BarData: bardata,
+              Annotations: state['Bar']['Annotations'],
+              Denominator: state['TimeSignature']['Denominator'],
+              End_Barline: d,
+            })
+          })
 
-          // push bar to history and reset
-          state['BarHistory'].push(state['Bar']);
+          // reset bar state
           state['Bar'] = {
             BarData: [],
             Annotations: [],
@@ -143,8 +144,7 @@ module.exports = function(data) {
         state['Bar']['Annotations'].push(d);
         // One Bar Repeat
       } else if (/x/.test(d)) {
-        // use slice to pass by value
-        state['Bar']['BarData'] = state['BarHistory'][state['BarHistory'].length - 1]['BarData'].slice();
+        ret.push(state['BarHistory'][state['BarHistory'].length - 1]);
         // Two Bar Repeat
       } else if (/r/.test(d)) {
         ret.push(state['BarHistory'][state['BarHistory'].length - 2]);
@@ -153,7 +153,7 @@ module.exports = function(data) {
     }
   }
 
-  // DATA PREPROCESSING:
+  // DATA POSTPROCESSING:
 
   // if section names come before the section opening barline,
   // move the section name from the pickup bar to the next bar
@@ -168,6 +168,18 @@ module.exports = function(data) {
     ret[0]['BarData'].push('');
   }
   ret[0]['Denominator'] = ret[1]['Denominator'];
+
+  // copy end_barline to next bar
+  ret[1]['Start_Barline'] = ret[0]['End_Barline'];
+  delete ret[0]['End_Barline'];
+  for (let j = 1; j < ret.length-1; j++) {
+    if (ret[j]['End_Barline'].length == 1) {
+      ret[j+1]['Start_Barline'] = '|';
+    } else { // assuming length == 2
+      ret[j+1]['Start_Barline'] = ret[j]['End_Barline'][1];
+      ret[j]['End_Barline'] = ret[j]['End_Barline'][0];
+    }
+  }
 
   return ret;
 };

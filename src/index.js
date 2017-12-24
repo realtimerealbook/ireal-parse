@@ -8,7 +8,7 @@ const parser = require('./parser');
 function iRealReader(data, reg) {
   const percentEncoded = regex.exec(data);
   const percentDecoded = decodeURIComponent(percentEncoded[1]);
-  var parts = percentDecoded.split('==='); // songs are separated by ===
+  let parts = percentDecoded.split('==='); // songs are separated by ===
   if (parts.length > 1) this.Name = parts.pop(); // playlist name
   this.songs = parts.map(x => new chart(x, reg));
 }
@@ -55,7 +55,7 @@ function chart(data, reg) {
     this.Ratings = [0,0,0,0,0];
 
     // get chart data
-    var raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
+    let raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
     this.ChartData = parser(raw);
   }
 }
