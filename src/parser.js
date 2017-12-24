@@ -144,11 +144,17 @@ module.exports = function(data) {
         state['Bar']['Annotations'].push(d);
         // One Bar Repeat
       } else if (/x/.test(d)) {
-        ret.push(state['BarHistory'][state['BarHistory'].length - 1]);
+        let prevbar = state['BarHistory'][state['BarHistory'].length - 1];
+        prevbar.Annotations = [];
+        ret.push(prevbar);
         // Two Bar Repeat
       } else if (/r/.test(d)) {
-        ret.push(state['BarHistory'][state['BarHistory'].length - 2]);
-        ret.push(state['BarHistory'][state['BarHistory'].length - 1]);
+        let prevprevbar = state['BarHistory'][state['BarHistory'].length - 2];
+        prevprevbar.Annotations = [];
+        ret.push(prevprevbar);
+        let prevbar = state['BarHistory'][state['BarHistory'].length - 1];
+        prevbar.Annotations = [];
+        ret.push(prevbar);
       }
     }
   }
