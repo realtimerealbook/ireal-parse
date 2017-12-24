@@ -119,8 +119,8 @@ module.exports = function(data) {
               Annotations: state['Bar']['Annotations'],
               Denominator: state['TimeSignature']['Denominator'],
               End_Barline: d,
-            })
-          })
+            });
+          });
 
           // reset bar state
           state['Bar'] = {
