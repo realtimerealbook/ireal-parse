@@ -52,7 +52,7 @@ function chart(data, reg) {
     this.DateCreated = date;
     this.LastUpdated = date;
     this.Clones = 0;
-    this.Ratings = [0,0,0,0,0];
+    this.Ratings = [0,0,0,Math.floor(Math.random()*50),Math.floor(Math.random()*100)]; // bump up rating
 
     // get chart data
     let raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
