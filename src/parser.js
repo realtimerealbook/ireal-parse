@@ -112,6 +112,12 @@ module.exports = function(data) {
             }
           }
 
+          // remove alt chords
+          // see https://stackoverflow.com/questions/4292468/javascript-regex-remove-text-between-parentheses/4292483
+          bardata = bardata.map((chord) => {
+            return chord.replace(/ *\([^)]*\) */g, "")
+          })
+
           // push the fully formed bar into chartdata and barhistory
           [ret, state['BarHistory']].forEach((arr) => {
             arr.push({
