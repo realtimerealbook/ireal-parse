@@ -60,7 +60,7 @@ module.exports = function(data) {
 
         if (state['Bar']['BarData'].length == 0 && ret.length > 0) {
           // if two barlines come in a row, add barline to previous bar
-          ret[ret.length - 1]['End_Barline'] = ret[ret.length - 1]['End_Barline'] + d;
+          ret[ret.length - 1]['EndBarline'] = ret[ret.length - 1]['EndBarline'] + d;
         } else {
           // push Bar to Section
           // make a copy of the bar to avoid pass-by-ref error
@@ -116,17 +116,18 @@ module.exports = function(data) {
           // see https://stackoverflow.com/questions/4292468/javascript-regex-remove-text-between-parentheses/4292483
           bardata = bardata.map((chord) => {
             return chord.replace(/ *\([^)]*\) */g, '');
-          })
+          });
 
-            // push the fully formed bar into chartdata and barhistory
-            [ret, state['BarHistory']].forEach((arr) => {
-              arr.push({
-                BarData: bardata,
-                Annotations: state['Bar']['Annotations'],
-                Denominator: state['TimeSignature']['Denominator'],
-                End_Barline: d,
-              });
+          // push the fully formed bar into chartdata and barhistory
+          [ret, state['BarHistory']].forEach((arr) => {
+            arr.push({
+              BarData: bardata,
+              Annotations: state['Bar']['Annotations'],
+              Denominator: state['TimeSignature']['Denominator'],
+              EndBarline: d,
+              BarWidth: 1,
             });
+          });
 
           // reset bar state
           state['Bar'] = {
@@ -181,15 +182,15 @@ module.exports = function(data) {
   }
   ret[0]['Denominator'] = ret[1]['Denominator'];
 
-  // copy end_barline to next bar
-  ret[1]['Start_Barline'] = ret[0]['End_Barline'];
-  delete ret[0]['End_Barline'];
+  // copy end barline to next bar
+  ret[1]['StartBarline'] = ret[0]['EndBarline'];
+  delete ret[0]['EndBarline'];
   for (let j = 1; j < ret.length-1; j++) {
-    if (ret[j]['End_Barline'].length == 1) {
-      ret[j+1]['Start_Barline'] = '|';
+    if (ret[j]['EndBarline'].length == 1) {
+      ret[j+1]['StartBarline'] = '|';
     } else { // assuming length == 2
-      ret[j+1]['Start_Barline'] = ret[j]['End_Barline'][1];
-      ret[j]['End_Barline'] = ret[j]['End_Barline'][0];
+      ret[j+1]['StartBarline'] = ret[j]['EndBarline'][1];
+      ret[j]['EndBarline'] = ret[j]['EndBarline'][0];
     }
   }
 
