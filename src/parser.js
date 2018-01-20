@@ -175,13 +175,6 @@ module.exports = function(data) {
     ret[0]['Annotations'] = [];
   }
 
-  // pickup bar should be empty and have the same time signature as the next bar
-  ret[0]['BarData'] = [];
-  for (let j = 0; j < ret[1]['BarData'].length; j++) {
-    ret[0]['BarData'].push('');
-  }
-  ret[0]['Denominator'] = ret[1]['Denominator'];
-
   // copy end barline to next bar
   ret[1]['StartBarline'] = ret[0]['EndBarline'];
   delete ret[0]['EndBarline'];
@@ -193,6 +186,9 @@ module.exports = function(data) {
       ret[j]['EndBarline'] = ret[j]['EndBarline'][0];
     }
   }
+
+  // remove first (useless) bar
+  ret.splice(0, 1);
 
   return ret;
 };
