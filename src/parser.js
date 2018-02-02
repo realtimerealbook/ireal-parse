@@ -186,6 +186,9 @@ module.exports = function(data) {
       ret[j]['EndBarline'] = ret[j]['EndBarline'][0];
     }
   }
+  if (ret[ret.length-1]['EndBarline'].length == 2) {
+    ret[ret.length-1]['EndBarline'] = ret[ret.length-1]['EndBarline'][1];
+  }
 
   // remove first (useless) bar
   ret.splice(0, 1);
