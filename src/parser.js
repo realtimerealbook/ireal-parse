@@ -21,9 +21,9 @@ module.exports = function(data) {
     BarHistory: [], // to take into account single / double bar repeats
   };
 
-  // use this to debug (find charts containing particular string):
-  let find_charts_containing = '';
-  if (data.indexOf(find_charts_containing) !== -1) {
+  // use this to debug (find charts matching regex expression):
+  let find_charts_containing = /.*/g;
+  if (data.match(find_charts_containing) !== null) {
     console.log('Raw data:', data);
   }
 
@@ -35,6 +35,7 @@ module.exports = function(data) {
   data = data.replace(/LZ/g, '|'); // this will also allow split on "Z"
   data = data.replace(/pp([A-G])/g, 'ppl$1'); // widen next chord on pp
   data = data.replace(/p(?![^<]*>)/g, 'sp '); // treat p (slash) like a chord
+  data = data.replace(/f(?![^<]*>)/g, ''); // remove pauses
 
   // these could be special chord names irealpro wasn't able to handle
   // see Crosscurrent, Miles Ahead, Someday (You'll Be Sorry), When You're Smilin'
