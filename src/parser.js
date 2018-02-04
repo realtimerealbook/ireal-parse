@@ -33,6 +33,7 @@ module.exports = function(data) {
   data = data.replace(/Kcl/g, '|x');
   data = data.replace(/sus/g, 'u'); // disallow split on "s" to remove sus chord
   data = data.replace(/LZ/g, '|'); // this will also allow split on "Z"
+  data = data.replace(/pp([A-G])/g, 'ppl$1') // widen next chord on pp
   data = data.replace(/p(?![^<]*>)/g, 'sp '); // treat p (slash) like a chord
 
   // these could be special chord names irealpro wasn't able to handle
