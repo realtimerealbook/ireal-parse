@@ -73,12 +73,6 @@ module.exports = function(data) {
           // make a copy of the bar to avoid pass-by-ref error
           let bardata = state['Bar']['BarData'].slice();
 
-          // bardata preprocessing: replace slash (p -> '/') and empty (W -> '')
-          for (let j = 0; j < bardata.length; j++) {
-            bardata[j] = bardata[j].replace(/p/g, '/');
-            bardata[j] = bardata[j].replace(/W/g, '');
-          }
-
           // Process the bar to obtain the full numerator length
           if (bardata.length <= 1 || bardata.length == state['TimeSignature']['Numerator']) {
             // length 1 or full length:
@@ -125,10 +119,12 @@ module.exports = function(data) {
             }
           }
 
-          // remove alt chords
-          // see https://stackoverflow.com/questions/4292468/javascript-regex-remove-text-between-parentheses/4292483
+          // bardata post processing
           bardata = bardata.map((chord) => {
-            return chord.replace(/ *\([^)]*\) */g, '');
+            chord = chord.replace(/ *\([^)]*\) */g, ''); // remove alt chords
+            chord = chord.replace(/p/g, '/'); // convert p to slashes
+            chord = chord.replace(/W/g, ''); // convert W to empty
+            return chord;
           });
 
           // push the fully formed bar into chartdata and barhistory
