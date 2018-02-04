@@ -35,6 +35,13 @@ module.exports = function(data) {
   data = data.replace(/LZ/g, '|'); // this will also allow split on "Z"
   data = data.replace(/p/g, 'p '); // treat p (slash) like a chord
 
+  // these could be special chord names irealpro wasn't able to handle
+  // see Crosscurrent, Miles Ahead, Someday (You'll Be Sorry), When You're Smilin'
+  data = data.replace(/\*7us\*/g, '7us') // this was a typo error in crosscurrent
+  data = data.replace(/\*7\+\*/g, '7+')
+  data = data.replace(/\*\)/g, '')
+  data = data.replace(/\+\*/g, '')
+
   // DATA SPLITTING:
   data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S|s|l)/);
   for (let i = 0; i < data.length; i++) {
