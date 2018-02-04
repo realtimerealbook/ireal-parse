@@ -37,10 +37,10 @@ module.exports = function(data) {
 
   // these could be special chord names irealpro wasn't able to handle
   // see Crosscurrent, Miles Ahead, Someday (You'll Be Sorry), When You're Smilin'
-  data = data.replace(/\*7us\*/g, '7us') // this was a typo error in crosscurrent
-  data = data.replace(/\*7\+\*/g, '7+')
-  data = data.replace(/\*\)/g, '')
-  data = data.replace(/\+\*/g, '')
+  data = data.replace(/\*7us\*/g, '7us'); // this was a typo error in crosscurrent
+  data = data.replace(/\*7\+\*/g, '7+');
+  data = data.replace(/\*\)/g, '');
+  data = data.replace(/\+\*/g, '');
 
   // DATA SPLITTING:
   data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S|s|l)/);
