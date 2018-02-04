@@ -81,7 +81,9 @@ module.exports = function(data) {
 
             // strip s/l prefix
             for (let j = 0; j < bardata.length; j++) {
-              bardata[j] = bardata[j].substr(1);
+              if (/[s/l]/g.test(bardata[j][0])) {
+                bardata[j] = bardata[j].substr(1);
+              }
             }
             // fill in remaining space with ""
             for (let j = bardata.length; j < state['TimeSignature']['Numerator']; j++) {
@@ -160,15 +162,15 @@ module.exports = function(data) {
       } else if (/x/.test(d)) {
         let prevbar = state['BarHistory'][state['BarHistory'].length - 1];
         prevbar.Annotations = [];
-        ret.push(prevbar);
+        state['Bar'] = prevbar;
         // Two Bar Repeat
       } else if (/r/.test(d)) {
         let prevprevbar = state['BarHistory'][state['BarHistory'].length - 2];
         prevprevbar.Annotations = [];
-        ret.push(prevprevbar);
+        ret.push(prevprevbar); // no need to worry about ending barline for prevprevbar
         let prevbar = state['BarHistory'][state['BarHistory'].length - 1];
         prevbar.Annotations = [];
-        ret.push(prevbar);
+        state['Bar'] = prevbar;
       }
     }
   }
