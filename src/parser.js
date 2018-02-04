@@ -127,15 +127,25 @@ module.exports = function(data) {
             return chord;
           });
 
+          // bar annotations processing
+          let barannot = state['Bar']['Annotations'].slice();
+          let barsection = barannot.find(e => /^\*\w$/.test(e));
+          let bartimebar = barannot.find(e => /^N\d$/.test(e));
+          let barsymbol = barannot.find(e => /^[Q|S]$/.test(e));
+          let barcomments = barannot.filter(e => /^<.*>$/.test(e));
           // push the fully formed bar into chartdata and barhistory
           [ret, state['BarHistory']].forEach((arr) => {
-            arr.push({
+            let o = {
               BarData: bardata,
-              Annotations: state['Bar']['Annotations'],
+              Comments: barcomments,
               Denominator: state['TimeSignature']['Denominator'],
               EndBarline: d,
               BarWidth: 1,
-            });
+            };
+            if (barsection) { o['Section'] = barsection; }
+            if (bartimebar) { o['TimeBar'] = bartimebar; }
+            if (barsymbol) { o['Symbol'] = barsymbol; }
+            arr.push(o);
           });
 
           // reset bar state
@@ -179,9 +189,9 @@ module.exports = function(data) {
 
   // if section names come before the section opening barline,
   // move the section name from the pickup bar to the next bar
-  if (ret[0]['Annotations'].length > 0) {
-    ret[1]['Annotations'].push(ret[0]['Annotations'][0]);
-    ret[0]['Annotations'] = [];
+  if (ret[0]['Section'] && ret[0]['Section'].length > 0) {
+    ret[1]['Section'].push(ret[0]['Section'][0]);
+    ret[0]['Section'] = [];
   }
 
   // copy end barline to next bar
