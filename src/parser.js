@@ -37,12 +37,10 @@ module.exports = function(data) {
   data = data.replace(/p(?![^<]*>)/g, 'sp '); // treat p (slash) like a chord
   data = data.replace(/f(?![^<]*>)/g, ''); // remove pauses
 
-  // these could be special chord names irealpro wasn't able to handle
+  // these could be special chord extensions irealpro wasn't able to handle
   // see Crosscurrent, Miles Ahead, Someday (You'll Be Sorry), When You're Smilin'
-  data = data.replace(/\*7us\*/g, '7us'); // this was a typo error in crosscurrent
+  data = data.replace(/\*7us\*/g, '7u'); // this was a typo error in crosscurrent
   data = data.replace(/\*7\+\*/g, '7+');
-  data = data.replace(/\*\)/g, '');
-  data = data.replace(/\+\*/g, '');
 
   // DATA SPLITTING:
   data = data.split(/(\{|\}|\[|\]|\||\s|T\d\d|\*\w|N\d|Z|x|<.*?>|Q|S|s|l)/);
@@ -75,6 +73,12 @@ module.exports = function(data) {
           // make a copy of the bar to avoid pass-by-ref error
           let bardata = state['Bar']['BarData'].slice();
 
+          // bardata preprocessing: replace slash (p -> '/') and empty (W -> '')
+          for (let j = 0; j < bardata.length; j++) {
+            bardata[j] = bardata[j].replace(/p/g, '/');
+            bardata[j] = bardata[j].replace(/W/g, '');
+          }
+
           // Process the bar to obtain the full numerator length
           if (bardata.length <= 1 || bardata.length == state['TimeSignature']['Numerator']) {
             // length 1 or full length:
@@ -83,9 +87,7 @@ module.exports = function(data) {
 
             // strip s/l prefix
             for (let j = 0; j < bardata.length; j++) {
-              if (/[s/l]/g.test(bardata[j][0])) {
-                bardata[j] = bardata[j].substr(1);
-              }
+              bardata[j] = bardata[j].replace(/^[sl](.*)/g, '$1');
             }
             // fill in remaining space with ""
             for (let j = bardata.length; j < state['TimeSignature']['Numerator']; j++) {
@@ -98,7 +100,7 @@ module.exports = function(data) {
 
             // strip s/l prefix
             for (let j = 0; j < bardata.length; j++) {
-              bardata[j] = bardata[j].substr(1);
+              bardata[j] = bardata[j].replace(/^[sl](.*)/g, '$1');
             }
 
             // insert "" inbetween array
