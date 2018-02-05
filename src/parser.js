@@ -189,9 +189,9 @@ module.exports = function(data) {
 
   // if section names come before the section opening barline,
   // move the section name from the pickup bar to the next bar
-  if (ret[0]['Section'] && ret[0]['Section'].length > 0) {
-    ret[1]['Section'].push(ret[0]['Section'][0]);
-    ret[0]['Section'] = [];
+  if (ret[0]['Section']) {
+    ret[1]['Section'] = ret[0]['Section'];
+    delete ret[0]['Section'];
   }
 
   // copy end barline to next bar
