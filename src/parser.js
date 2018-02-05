@@ -135,17 +135,16 @@ module.exports = function(data) {
           let barcomments = barannot.filter(e => /^<.*>$/.test(e));
           // push the fully formed bar into chartdata and barhistory
           [ret, state['BarHistory']].forEach((arr) => {
-            let o = {
+            arr.push({
               BarData: bardata,
-              Comments: barcomments,
               Denominator: state['TimeSignature']['Denominator'],
               EndBarline: d,
               BarWidth: 1,
-            };
-            if (barsection) { o['Section'] = barsection; }
-            if (bartimebar) { o['TimeBar'] = bartimebar; }
-            if (barsymbol) { o['Symbol'] = barsymbol; }
-            arr.push(o);
+              Comments: barcomments.map(comment => comment.substr(1,comment.length-2)),
+              Section: barsection ? barsection[1] : '',
+              TimeBar: bartimebar ? bartimebar[1] : '',
+              Symbol: barsymbol ? barsymbol : '',
+            });
           });
 
           // reset bar state
