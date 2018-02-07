@@ -140,7 +140,7 @@ module.exports = function(data) {
               Denominator: state['TimeSignature']['Denominator'],
               EndBarline: d,
               BarWidth: 1,
-              Comments: barcomments.map(comment => comment.substr(1,comment.length-2)),
+              Comment: barcomments.map(comment => comment.substr(1,comment.length-2)).join(),
               Section: barsection ? barsection[1] : '',
               TimeBar: bartimebar ? bartimebar[1] : '',
               Symbol: barsymbol ? barsymbol : '',
