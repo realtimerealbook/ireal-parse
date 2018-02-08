@@ -27,8 +27,8 @@ function chart(data, reg) {
     console.log(Array(80).join('-'));
     console.log('Parsing data for:', parts[0]);
 
-    // get title
-    this.Title = parts[0];
+    // get title: move "A" and "The" to front (eg. Gentle Rain, The)
+    this.Title = parts[0].replace(/(.*)(, )(A|The)$/g, '$3 $1');
 
     // get artist: reverse first and last names
     if (parts[1].split(' ').length == 2) {
