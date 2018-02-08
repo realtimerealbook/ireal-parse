@@ -133,6 +133,7 @@ module.exports = function(data) {
           let bartimebar = barannot.find(e => /^N\d$/.test(e));
           let barsymbol = barannot.find(e => /^[Q|S]$/.test(e));
           let barcomments = barannot.filter(e => /^<.*>$/.test(e));
+          barcomments = barcomments.map(comment => comment.substr(1,comment.length-2)).join();
           // push the fully formed bar into chartdata and barhistory
           [ret, state['BarHistory']].forEach((arr) => {
             arr.push({
@@ -140,10 +141,10 @@ module.exports = function(data) {
               Denominator: state['TimeSignature']['Denominator'],
               EndBarline: d,
               BarWidth: 1,
-              Comment: barcomments.map(comment => comment.substr(1,comment.length-2)).join(),
-              Section: barsection ? barsection[1] : '',
-              TimeBar: bartimebar ? bartimebar[1] : '',
-              Symbol: barsymbol ? barsymbol : '',
+              Comment: barcomments ? barcomments : null,
+              Section: barsection ? barsection[1] : null,
+              TimeBar: bartimebar ? bartimebar[1] : null,
+              Symbol: barsymbol ? barsymbol : null,
             });
           });
 
