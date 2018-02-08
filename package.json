@@ -26,6 +26,7 @@
     "lint": "./node_modules/.bin/eslint **/*.js"
   },
   "dependencies": {
-    "lint": "^1.1.2"
+    "lint": "^1.1.2",
+    "rethinkdb": "^2.3.3"
   }
 }
