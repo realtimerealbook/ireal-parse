@@ -17,25 +17,26 @@ r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
 });
 
 function insertchart(f, conn){
-  const chartData = f.ChartData.slice();
-  f.ChartData = [];
+  const chartData = f.chart_data.slice();
+  f.chart_data = [];
 
   // insert chart
   r.table('charts').insert(f).run(conn, function(err, res) {
     if (err) throw err;
 
     const chartID = res.generated_keys[0];
-    console.log('Inserted chart with key', chartID);
+    console.log(`Inserted chart with key ${chartID}`);
 
     // insert bars (insert in a batch)
     r.table('bars').insert(chartData).run(conn, function(err, res) {
       if (err) throw err;
 
       const barIDs = res.generated_keys;
+      console.log(`Inserted bars for chart ${chartID} with barIDs ${barIDs}`)
       
       // append barID to chart
       r.table('charts').get(chartID).update({
-        'ChartData': barIDs,
+        'chart_data': barIDs,
       }).run(conn, function(err) {
         if (err) throw err;
       });

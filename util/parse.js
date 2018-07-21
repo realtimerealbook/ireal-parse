@@ -40,9 +40,9 @@ fs.readdir(dirOutput, (err, outFiles) => {
     const parsed = new iRealReader(data, reg);
 
     for (let i = 0; i < parsed.songs.length; i++) {
-      if (parsed.songs[i].Title) {
+      if (parsed.songs[i].title) {
         // don't save empty objects {}
-        const fn = parsed.songs[i].Title.replace(/\s/g, '_');
+        const fn = parsed.songs[i].title.replace(/\s/g, '_');
 
         fs.writeFile(`${dirOutput}/${fn}.json`, JSON.stringify(parsed.songs[i], null, 2), err => {
           if (err) throw err;
