@@ -32,7 +32,7 @@ function insertchart(f, conn){
       if (err) throw err;
 
       const barIDs = res.generated_keys;
-      console.log(`Inserted bars for chart ${chartID} with barIDs ${barIDs}`)
+      console.log(`Inserted bars for chart ${chartID} with barIDs ${barIDs}`);
       
       // append barID to chart
       r.table('charts').get(chartID).update({
