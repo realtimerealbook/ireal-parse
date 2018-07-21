@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const iRealReader = require('../src');
 
-const dirInput = '../data_in';
-const dirOutput = '../data_out';
+const dirInput = './data_in';
+const dirOutput = './data_out';
 
 fs.readdir(dirOutput, (err, outFiles) => {
   if (err) throw err;

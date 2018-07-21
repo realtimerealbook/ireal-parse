@@ -47,8 +47,6 @@ function chart(data, reg) {
     // add rtrb-specific fields
     this.CreatedBy = 'rtrb.io';
     this.Collaborators = [];
-    this.DateCreated = new Date();
-    this.LastUpdated = new Date();
 
     // bump up rating
     this.Clones = Math.floor(Math.random()*300);

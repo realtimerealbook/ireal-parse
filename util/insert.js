@@ -2,13 +2,15 @@ const r = require('rethinkdb');
 const fs = require('fs');
 const path = require('path');
 
-const dirOut = '../data_out';
+const dirOut = './data_out';
 
 r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
   fs.readdir(dirOut, (err, files) => {
     if (err) throw err;
     for (let file of files) {
       const f = JSON.parse(fs.readFileSync(path.join(dirOut, file)));
+      f.date_created = r.now();
+      f.last_updated = r.now();
       insertchart(f, conn);
     };
   });

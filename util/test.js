@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const dir_out = '../data_out';
-const dir_test = '../data_out_test';
+const dir_out = './data_out';
+const dir_test = './data_out_test';
 
 fs.readdir(dir_test, (err, files) => {
   if (err) throw err;

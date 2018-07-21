@@ -26,7 +26,7 @@ Tell_me_a_bedtime_story
 Ensure that `data_in/1300.txt` is available, then simply run
 
 ```
-node parse
+node util/parse
 ```
 
 Your output should now be in `data_out/<filename>.json`.
@@ -36,7 +36,7 @@ Your output should now be in `data_out/<filename>.json`.
 To test that your output matches the expected output, create the directory `data_out_test/` in your home folder and place your expected output in `data_out_test/<filename>.json`. Then simply run
 
 ```
-node test
+node util/test
 ```
 
 ## Inserting into RethinkDB
@@ -56,7 +56,7 @@ rethinkdb
 Then simply run
 
 ```
-node insert
+node util/insert
 ```
 
 You can check that your charts are properly inserted by navigating to the rethinkdb [data explorer](http://localhost:8080/#dataexplorer), and running the `get` command on any of the tables
