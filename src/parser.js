@@ -8,22 +8,22 @@ module.exports = function(data) {
   let ret = [];
 
   let state = {
-    time_signature: {
+    timeSignature: {
       // assume 4/4 if not stated (some charts have no time sig)
       numerator: 4, // not stored
       denominator: 4, // stored
     },
     size: 'l', // assume size "l" if unstated
     bar: {
-      bar_data: [], // Chords
+      barData: [], // Chords
       annotations: [], // could be comments, coda, segno, houses
     },
-    bar_history: [], // to take into account single / double bar repeats
+    barHistory: [], // to take into account single / double bar repeats
   };
 
   // use this to debug (find charts matching regex expression):
-  let find_charts_containing = /.*/g;
-  if (data.match(find_charts_containing) !== null) {
+  let findChartsContaining = /.*/g;
+  if (data.match(findChartsContaining) !== null) {
     console.log('Raw data:', data);
   }
 
@@ -60,21 +60,21 @@ module.exports = function(data) {
       if (/T\d\d/.test(d)) {
         // Time Signature
 
-        state['time_signature']['numerator'] = parseInt(d.charAt(1));
-        state['time_signature']['denominator'] = parseInt(d.charAt(2));
+        state['timeSignature']['numerator'] = parseInt(d.charAt(1));
+        state['timeSignature']['denominator'] = parseInt(d.charAt(2));
       } else if (/^\{|\[|\||\}|\]|Z$/.test(d)) {
         // Bar Lines
 
-        if (state['bar']['bar_data'].length == 0 && ret.length > 0) {
+        if (state['bar']['barData'].length == 0 && ret.length > 0) {
           // if two barlines come in a row, add barline to previous bar
-          ret[ret.length - 1]['end_barline'] = ret[ret.length - 1]['end_barline'] + d;
+          ret[ret.length - 1]['endBarline'] = ret[ret.length - 1]['endBarline'] + d;
         } else {
           // push bar to section
           // make a copy of the bar to avoid pass-by-ref error
-          let bardata = state['bar']['bar_data'].slice();
+          let bardata = state['bar']['barData'].slice();
 
           // Process the bar to obtain the full numerator length
-          if (bardata.length <= 1 || bardata.length == state['time_signature']['numerator']) {
+          if (bardata.length <= 1 || bardata.length == state['timeSignature']['numerator']) {
             // length 1 or full length:
             // ["lC"], T44 -> ["C","","",""]
             // ["sC","sD","sE","sF"], T44 -> ["C","D","E","F"]
@@ -84,10 +84,10 @@ module.exports = function(data) {
               bardata[j] = bardata[j].replace(/^[sl](.*)/g, '$1');
             }
             // fill in remaining space with ""
-            for (let j = bardata.length; j < state['time_signature']['numerator']; j++) {
+            for (let j = bardata.length; j < state['timeSignature']['numerator']; j++) {
               bardata.push('');
             }
-          } else if (bardata.length == 2 && state['time_signature']['numerator'] % 2 == 0) {
+          } else if (bardata.length == 2 && state['timeSignature']['numerator'] % 2 == 0) {
             // half length:
             // ["lC","lD"], T44 -> ["C","","D",""]
             // ["lG","lF"], T64 -> ["G","","","F","",""]
@@ -98,8 +98,8 @@ module.exports = function(data) {
             }
 
             // insert "" inbetween array
-            for (let j = 0; j < state['time_signature']['numerator']; j += state['time_signature']['numerator'] / 2) {
-              for (let k = 1; k < state['time_signature']['numerator'] / 2; k++) {
+            for (let j = 0; j < state['timeSignature']['numerator']; j += state['timeSignature']['numerator'] / 2) {
+              for (let k = 1; k < state['timeSignature']['numerator'] / 2; k++) {
                 bardata.splice(j + k, 0, '');
               }
             }
@@ -135,22 +135,22 @@ module.exports = function(data) {
           let barcomments = barannot.filter(e => /^<.*>$/.test(e));
           barcomments = barcomments.map(comment => comment.substr(1,comment.length-2)).join();
           // push the fully formed bar into chartdata and barhistory
-          [ret, state['bar_history']].forEach((arr) => {
+          [ret, state['barHistory']].forEach((arr) => {
             arr.push({
-              bar_data: bardata,
-              denominator: state['time_signature']['denominator'],
-              end_barline: d,
-              bar_width: 1,
+              barData: bardata,
+              denominator: state['timeSignature']['denominator'],
+              endBarline: d,
+              barWidth: 1,
               comment: barcomments ? barcomments : null,
               section: barsection ? barsection[1] : null,
-              time_bar: bartimebar ? bartimebar[1] : null,
+              timeBar: bartimebar ? bartimebar[1] : null,
               symbol: barsymbol ? barsymbol : null,
             });
           });
 
           // reset bar state
           state['bar'] = {
-            bar_data: [],
+            barData: [],
             annotations: [],
           };
         }
@@ -161,7 +161,7 @@ module.exports = function(data) {
         // Chord
       } else if (/^[A-G|f|W].*|^[pn]$/.test(d)) {
         d = d.replace(/u/g, 'sus'); // sus previously replaced with u
-        state['bar']['bar_data'].push(state['size'] + d); // force s/l prefix
+        state['bar']['barData'].push(state['size'] + d); // force s/l prefix
         // S / L prefix
       } else if (/^s|l$/.test(d)) {
         state['size'] = d;
@@ -170,15 +170,15 @@ module.exports = function(data) {
         state['bar']['annotations'].push(d);
         // One Bar Repeat
       } else if (/x/.test(d)) {
-        let prevbar = state['bar_history'][state['bar_history'].length - 1];
+        let prevbar = state['barHistory'][state['barHistory'].length - 1];
         prevbar.annotations = [];
         state['bar'] = prevbar;
         // Two Bar Repeat
       } else if (/r/.test(d)) {
-        let prevprevbar = state['bar_history'][state['bar_history'].length - 2];
+        let prevprevbar = state['barHistory'][state['barHistory'].length - 2];
         prevprevbar.annotations = [];
         ret.push(prevprevbar); // no need to worry about ending barline for prevprevbar
-        let prevbar = state['bar_history'][state['bar_history'].length - 1];
+        let prevbar = state['barHistory'][state['barHistory'].length - 1];
         prevbar.annotations = [];
         state['bar'] = prevbar;
       }
@@ -195,19 +195,19 @@ module.exports = function(data) {
   }
 
   // copy end barline to next bar
-  ret[1]['start_barline'] = ret[0]['end_barline'];
-  delete ret[0]['end_barline'];
+  ret[1]['startBarline'] = ret[0]['endBarline'];
+  delete ret[0]['endBarline'];
   for (let j = 1; j < ret.length-1; j++) {
-    if (ret[j]['end_barline'].length == 1) {
-      ret[j+1]['start_barline'] = '|';
+    if (ret[j]['endBarline'].length == 1) {
+      ret[j+1]['startBarline'] = '|';
     } else { // assuming length == 2
-      ret[j+1]['start_barline'] = ret[j]['end_barline'][1];
-      ret[j]['end_barline'] = ret[j]['end_barline'][0];
+      ret[j+1]['startBarline'] = ret[j]['endBarline'][1];
+      ret[j]['endBarline'] = ret[j]['endBarline'][0];
     }
   }
-  const finalBarline = ret[ret.length-1]['end_barline'];
+  const finalBarline = ret[ret.length-1]['endBarline'];
   if (finalBarline.length > 1) {
-    ret[ret.length-1]['end_barline'] = finalBarline[finalBarline.length-1];
+    ret[ret.length-1]['endBarline'] = finalBarline[finalBarline.length-1];
   }
 
   // remove first (useless) bar

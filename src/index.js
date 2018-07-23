@@ -20,8 +20,8 @@ function chart(data, reg) {
   const parts = data.split(/=+/).filter(x => x != '');
 
   // output based on regex, e.g. /Fly_Me_To_The_Moon|Tell_me_a_bedtime_story/
-  let title_match = parts[0].replace(/\s/g, '_');
-  if (!reg.test(title_match)) {
+  let titleMatch = parts[0].replace(/\s/g, '_');
+  if (!reg.test(titleMatch)) {
     return;
   } else {
     console.log(Array(80).join('-'));
@@ -45,7 +45,7 @@ function chart(data, reg) {
     // this.Key = parts[3]; // ignore key
 
     // add rtrb-specific fields
-    this.created_by = 'rtrb.io';
+    this.createdBy = 'rtrb.io';
     this.collaborators = [];
 
     // bump up rating
@@ -54,7 +54,7 @@ function chart(data, reg) {
 
     // get chart data
     let raw = unscramble.ireal(parts[4].split(musicPrefix)[1]);
-    this.chart_data = parser(raw);
+    this.chartData = parser(raw);
   }
 }
 

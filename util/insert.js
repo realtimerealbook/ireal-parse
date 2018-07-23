@@ -9,16 +9,16 @@ r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
     if (err) throw err;
     for (let file of files) {
       const f = JSON.parse(fs.readFileSync(path.join(dirOut, file)));
-      f.date_created = r.now();
-      f.last_updated = r.now();
+      f.dateCreated = r.now();
+      f.lastUpdated = r.now();
       insertchart(f, conn);
     };
   });
 });
 
 function insertchart(f, conn){
-  const chartData = f.chart_data.slice();
-  f.chart_data = [];
+  const chartData = f.chartData.slice();
+  f.chartData = [];
 
   // insert chart
   r.table('charts').insert(f).run(conn, function(err, res) {
@@ -36,7 +36,7 @@ function insertchart(f, conn){
       
       // append barID to chart
       r.table('charts').get(chartID).update({
-        'chart_data': barIDs,
+        'chartData': barIDs,
       }).run(conn, function(err) {
         if (err) throw err;
       });
