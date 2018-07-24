@@ -20,6 +20,14 @@ function insertchart(f, conn){
   const chartData = f.chartData.slice();
   f.chartData = [];
 
+  // do not insert null values
+  chartData.map(o => {
+    ['comment', 'section', 'timeBar', 'symbol'].forEach(k => {
+      if (o[k] === null) delete o[k]; 
+    });
+    return o;
+  });
+
   // insert chart
   r.table('charts').insert(f).run(conn, function(err, res) {
     if (err) throw err;
