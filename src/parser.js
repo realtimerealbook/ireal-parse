@@ -87,22 +87,28 @@ module.exports = function(data) {
             for (let j = bardata.length; j < state['timeSignature']['numerator']; j++) {
               bardata.push('');
             }
-          } else if (bardata.length == 2 && state['timeSignature']['numerator'] % 2 == 0) {
-            // half length:
-            // ["lC","lD"], T44 -> ["C","","D",""]
-            // ["lG","lF"], T64 -> ["G","","","F","",""]
-
+          } else if (bardata.length == 2) {
             // strip s/l prefix
             for (let j = 0; j < bardata.length; j++) {
               bardata[j] = bardata[j].replace(/^[sl](.*)/g, '$1');
             }
 
-            // insert "" inbetween array
-            for (let j = 0; j < state['timeSignature']['numerator']; j += state['timeSignature']['numerator'] / 2) {
-              for (let k = 1; k < state['timeSignature']['numerator'] / 2; k++) {
-                bardata.splice(j + k, 0, '');
+            if (state['timeSignature']['numerator'] % 2 == 0) {
+              // half length:
+              // ["lC","lD"], T44 -> ["C","","D",""]
+              // ["lG","lF"], T64 -> ["G","","","F","",""]
+              // insert "" inbetween array
+              for (let j = 0; j < state['timeSignature']['numerator']; j += state['timeSignature']['numerator'] / 2) {
+                for (let k = 1; k < state['timeSignature']['numerator'] / 2; k++) {
+                  bardata.splice(j + k, 0, '');
+                }
               }
+            } else if (state['timeSignature']['numerator'] == 5) {
+              // T54: assume 3+2 (eg. Take Five)
+              bardata.splice(1, 0, '', '');
+              bardata.splice(4, 0, '');
             }
+
           } else {
             // other lengths: probably a bar of length 3 in T44
             // iReal Pro implies chord length via the "s" and "l" (small/large) prefixes

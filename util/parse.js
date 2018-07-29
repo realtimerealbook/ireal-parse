@@ -5,10 +5,15 @@ const iRealReader = require('../src');
 const dirInput = './data_in';
 const dirOutput = './data_out';
 
+// Make output directory if it doesn't exist
+if (!fs.existsSync(dirOutput)){
+  fs.mkdirSync(dirOutput);
+}
+
 fs.readdir(dirOutput, (err, outFiles) => {
   if (err) throw err;
 
-  // Delete existing files in output directory.
+  // Delete existing files in output directory
   for (const file of outFiles) {
     fs.unlink(path.join(dirOutput, file), err => {
       if (err) throw err;
@@ -16,17 +21,21 @@ fs.readdir(dirOutput, (err, outFiles) => {
   }
 
   // parse and output files to "data_out/"
-  const inFiles = fs.readFileSync(`${dirInput}/list.txt`, 'utf-8');
+  const listDir = `${dirInput}/list.txt`;
+  const inFiles = fs.existsSync(listDir) && fs.readFileSync(listDir, 'utf-8');
   let reg;
+  let len;
 
-  if (inFiles == '') {
-    // if file is empty, parse all 1300 files
+  if (!inFiles || inFiles === '') {
+    // if file does not exist or is empty, parse all 1300 files
     reg = new RegExp('');
+    len = 1300;
   } else {
     // else match for exact file names from list.txt eg. "abc\ndef" -> /^abc$|^def$/
+    const spl = inFiles.split('\n');
+    len = spl.length;
     reg = new RegExp(
-      inFiles
-        .split('\n')
+      spl
         .map(x => `^${x}$`)
         .join('|')
     );
@@ -48,7 +57,7 @@ fs.readdir(dirOutput, (err, outFiles) => {
           if (err) throw err;
         });
 
-        console.log(`Saved file (${ii}/${inFiles.split('\n').length},${i + 1}/${parsed.songs.length}): ${fn}`);
+        console.log(`Saved file (${ii}/${len},${i + 1}/${parsed.songs.length}): ${fn}`);
         ii++;
       }
     }
