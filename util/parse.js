@@ -49,9 +49,10 @@ fs.readdir(dirOutput, (err, outFiles) => {
     const parsed = new iRealReader(data, reg);
 
     for (let i = 0; i < parsed.songs.length; i++) {
-      if (parsed.songs[i].title) {
-        // don't save empty objects {}
-        const fn = parsed.songs[i].title.replace(/\s/g, '_');
+      if (parsed.songs[i].title) { // do not save empty objects {}
+        const fn = parsed.songs[i].title
+          .replace(/\s/g, '_')
+          .replace(/\?/g, ''); // question marks do not work on windows
 
         fs.writeFile(`${dirOutput}/${fn}.json`, JSON.stringify(parsed.songs[i], null, 2), err => {
           if (err) throw err;
