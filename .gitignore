@@ -3,3 +3,4 @@ data_out/*
 data_out_test/*
 node_modules/
 error/
+npm-debug.log
