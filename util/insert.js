@@ -4,7 +4,7 @@ const path = require('path');
 
 const dirOut = './data_out';
 
-r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
+r.connect({ host: 'localhost', port: 28015, db: 'rtrb' }, function(err, conn) {
   fs.readdir(dirOut, (err, files) => {
     if (err) throw err;
     for (let file of files) {
