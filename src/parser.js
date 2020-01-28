@@ -215,6 +215,14 @@ module.exports = function(data) {
   if (finalBarline.length > 1) {
     ret[ret.length-1]['endBarline'] = finalBarline[finalBarline.length-1];
   }
+  for (let i = 1; i < ret.length; i++) {
+    if (ret[i]['startBarline'] == '|') {
+      ret[i]['startBarline'] = null;
+    }
+    if (ret[i]['endBarline'] == '|') {
+      ret[i]['endBarline'] = null;
+    }
+  }
 
   // remove first (useless) bar
   ret.splice(0, 1);
