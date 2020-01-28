@@ -217,10 +217,10 @@ module.exports = function(data) {
   }
   for (let i = 1; i < ret.length; i++) {
     if (ret[i]['startBarline'] == '|') {
-      ret[i]['startBarline'] = null
+      ret[i]['startBarline'] = null;
     }
     if (ret[i]['endBarline'] == '|') {
-      ret[i]['endBarline'] = null
+      ret[i]['endBarline'] = null;
     }
   }
 
