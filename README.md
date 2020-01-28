@@ -1,18 +1,16 @@
 # ireal-parse [![Build Status](https://travis-ci.org/realtimerealbook/ireal-parse.svg?branch=master)](https://travis-ci.org/realtimerealbook/ireal-parse)
 
-This is a script that selectively parses charts from the [iReal Pro Jazz 1300 Standards](https://www.irealb.com/forums/showthread.php?12753-Jazz-1300-Standards) into a convenient JSON format, with the intention of inserting them into the rtrb database.
+This is a script that selectively parses charts uploaded onto iReal Pro forums into a convenient JSON format.
 
 ![](https://github.com/realtimerealbook/ireal-parse/raw/master/docs/images/demo.gif)
 
 A good portion of the code here is adapted from pianosnake's [ireal-reader](https://www.npmjs.com/package/ireal-reader).
 
-## Usage
+## Development
 
-First create the directory `data_out/` in your home folder, then configure `data_in/list.txt` to contain the list of file names we want to parse and test. To *parse all 1300 charts*, simply leave `data_in/list.txt` blank.
+As a benchmark, we aim to accurately parse all charts from the popular thread [Jazz 1300 Standards](https://www.irealb.com/forums/showthread.php?12753-Jazz-1300-Standards). A copy of the original chart data has been included in `data_in/1300_orig.txt`.
 
-The complete list of 1300 chart names in `data_in/1300.txt` can be found [here](http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs).
-
-File names should be separated by a new line, with spaces replaced by underscores, and special characters escaped. For example:
+Optionally, we can configure `data_in/list.txt` to contain the list of [file names]((http://www.irealb.com/forums/showthread.php?4522-Jazz-1300-Standards-Individual-Songs)) we want to parse and test. File names should be separated by a new line, with spaces replaced by underscores, and special characters escaped:
 
 ```
 Fly_Me_To_The_Moon
@@ -23,18 +21,10 @@ St\._Thomas
 Tell_me_a_bedtime_story
 ```
 
-Ensure that `data_in/1300.txt` is available, then simply run
+Next simply run
 
 ```
 node util/parse
 ```
 
 Your output should now be in `data_out/<filename>.json`.
-
-## Testing
-
-To test that your output matches the expected output, create the directory `data_out_test/` in your home folder and place your expected output in `data_out_test/<filename>.json`. Then simply run
-
-```
-node util/test
-```
